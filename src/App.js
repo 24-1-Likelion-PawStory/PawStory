@@ -1,6 +1,7 @@
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Loginhome from "./pages/Loginhome";
+import Home_write from "./pages/Home_write.jsx"
 import Myhome from "./pages/Myhome";
 import Community from "./pages/Community";
 import Layout from "./pages/Layout";
@@ -13,10 +14,11 @@ function App() {
     <BrowserRouter>
       <Routes>
       <Route element={<Layout />}>
-       <Route path= "/" element={<Loginhome/>}/>
-       <Route path= "/my" element={<Myhome/>}/>
-       <Route path= "/community" element={<Community/>}/>
-       </Route>
+        <Route path= "/" element={<Loginhome/>}/>
+        <Route path= "/post" element={<Home_write/>}/>
+        <Route path= "/my" element={<Myhome/>}/>
+        <Route path= "/community" element={<Community/>}/>
+        </Route>
       </Routes>
     </BrowserRouter>
   );

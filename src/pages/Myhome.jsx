@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-pascal-case */
 import React, { useEffect, useState } from "react";
 import axios from 'axios';
 import Underbar from "../components/Underbar";
@@ -110,7 +111,7 @@ const Myhome = () => {
           <Myhome_follow>+ Follow</Myhome_follow>
           <Myhome_profile_info_container>
             <Myhome_profile_info>
-             Diary
+              Diary
               < Myhome_profile_num>{myhome_user_info1.id}</Myhome_profile_num>
             </Myhome_profile_info>
             <Myhome_profile_info>
