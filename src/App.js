@@ -1,9 +1,35 @@
+import React from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Loginhome from "./pages/Loginhome";
+import Myhome from "./pages/Myhome";
+import Community from "./pages/Community";
+import Layout from "./pages/Layout";
+/*;
+import Communitywrite from "./pages/Communitywrite";
+import Communityread from "./pages/Communityread"; */
+
 function App() {
   return (
-    <div>
-      <h1>skeleton project</h1>
-    </div>
+    <BrowserRouter>
+      <Routes>
+      <Route element={<Layout />}>
+       <Route path= "/" element={<Loginhome/>}/>
+       <Route path= "/my" element={<Myhome/>}/>
+       <Route path= "/community" element={<Community/>}/>
+       </Route>
+      </Routes>
+    </BrowserRouter>
   );
 }
 
 export default App;
+
+/*    <BrowserRouter>
+      <Routes>
+       <Route path= "/:Id" element={<Loginhome/>}/>
+       <Route path= "/:Id/my" element={<Myhome/>}/>
+       <Route path= "/:Id/community" element={<Community/>}/>
+       <Route path= "/:Id/communitywrite" element={<Communitywrite/>}/>
+       <Route path= "/:Id/communityread" element={<Communityread/>}/>
+      </Routes>
+    </BrowserRouter> */
