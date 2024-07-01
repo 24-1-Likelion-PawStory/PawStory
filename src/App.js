@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-pascal-case */
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Loginhome from "./pages/Loginhome";
@@ -28,10 +29,10 @@ export default App;
 
 /*    <BrowserRouter>
       <Routes>
-       <Route path= "/:Id" element={<Loginhome/>}/>
-       <Route path= "/:Id/my" element={<Myhome/>}/>
-       <Route path= "/:Id/community" element={<Community/>}/>
-       <Route path= "/:Id/communitywrite" element={<Communitywrite/>}/>
-       <Route path= "/:Id/communityread" element={<Communityread/>}/>
+        <Route path= "/:Id" element={<Loginhome/>}/>
+        <Route path= "/:Id/my" element={<Myhome/>}/>
+        <Route path= "/:Id/community" element={<Community/>}/>
+        <Route path= "/:Id/communitywrite" element={<Communitywrite/>}/>
+        <Route path= "/:Id/communityread" element={<Communityread/>}/>
       </Routes>
     </BrowserRouter> */
