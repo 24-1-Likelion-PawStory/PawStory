@@ -14,6 +14,35 @@ const Logo_wrapper = styled.div`
     top: 10.25rem;
 `
 
+const Input_id = styled.input`
+box-sizing: border-box;
+
+position: absolute;
+width: 19.063rem;
+height: 3.313rem;
+top: 26.063rem;
+
+background: #FFFFFF;
+border: 1px solid #000000;
+border-radius: 10px;
+padding-left:1rem;
+font-size:0.9rem;
+`
+const Input_password = styled.input`
+box-sizing: border-box;
+
+position: absolute;
+width: 19.063rem;
+height: 3.313rem;
+top: 30.688rem;
+
+background: #FFFFFF;
+border: 1px solid #000000;
+border-radius: 10px;
+padding-left:1rem;
+font-size:0.9rem;
+`
+
 const Loginpage = () => {
 
     return (
@@ -24,6 +53,8 @@ const Loginpage = () => {
                 <Logo/>
             </Logo_wrapper>
     
+            <Input_id type="text" placeholder="아이디 입력"></Input_id>
+            <Input_password type="text" placeholder="비밀번호 입력"></Input_password>
             <Next_button></Next_button>
         </>
     );

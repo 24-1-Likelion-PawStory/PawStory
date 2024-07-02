@@ -7,7 +7,7 @@ const Text = styled.p`
     width: 5rem;
     height: 1.688rem;
     left: 2.75rem;
-    top: 18.375rem;
+    top: 17.875rem;
 
     font-family: 'Open Sans';
     font-style: normal;

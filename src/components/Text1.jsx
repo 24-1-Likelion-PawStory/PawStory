@@ -7,7 +7,7 @@ const Text_wrapper=styled.div`
     width: 11.438rem;
     height: 4.438rem;
     left: 2.75rem;
-    top: 10.063rem;
+    top: 10.63rem;
     word-break:break-all;
 `
 

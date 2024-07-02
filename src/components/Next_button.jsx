@@ -47,6 +47,9 @@ const Next_button = () => {
             case "/register_select/name/image":
                 next_path = "/register_select/name/image/complete";
                 break;
+            case "/register_select/name/image/complete":
+                next_path = "/loginpage";
+                break;
 
             default:
                 next_path = "/";
