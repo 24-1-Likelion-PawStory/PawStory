@@ -126,6 +126,8 @@ const Communitywrite = () => {
 
   const communitywrite_handle_share_click = () => {
     setClicked(prevState => !prevState); // 클릭 상태 토글
+
+    communitywrite_set_content(""); // 본문 입력란 비우기
   };
 
   const community_buttons = ["같이해요", "궁금해요", "정보공유", "일상공유"];
