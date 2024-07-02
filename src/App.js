@@ -4,9 +4,9 @@ import Loginhome from "./pages/Loginhome";
 import Myhome from "./pages/Myhome";
 import Community from "./pages/Community";
 import Layout from "./pages/Layout";
-/*;
+import Communityread from "./pages/Comunnityread";
 import Communitywrite from "./pages/Communitywrite";
-import Communityread from "./pages/Communityread"; */
+
 
 function App() {
   return (
@@ -16,6 +16,8 @@ function App() {
        <Route path= "/" element={<Loginhome/>}/>
        <Route path= "/my" element={<Myhome/>}/>
        <Route path= "/community" element={<Community/>}/>
+       <Route path= "/communityread" element={<Communityread/>}/>
+       <Route path= "/communitywrite" element={<Communitywrite/>}/>
        </Route>
       </Routes>
     </BrowserRouter>
