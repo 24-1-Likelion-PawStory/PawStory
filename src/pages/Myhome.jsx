@@ -46,7 +46,6 @@ const Myhome_profile_container = styled.div`
 `;
 
 const Myhome_profile_info_container = styled.div`
-  border: 2px solid blue;
   border-bottom: 0.019rem solid #D9D9D9;
   width: 16.75rem;
   padding-top:1.563rem;
