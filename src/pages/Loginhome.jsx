@@ -5,7 +5,7 @@ import axios from 'axios';
 import { styled } from 'styled-components';
 import Card from "../components/Card";
 import Underbar from "../components/Underbar";
-import post_button from "../assets/icons/post_button.svg"
+import post_button from "../assets/icons/post_button.png"
 
 const Loginhome_container =styled.div`
   display: flex;
@@ -63,7 +63,7 @@ const Loginhome = () => {
   }, []);
 
   const navigate_to_post = () => {
-    navigate("./Home_write.jsx")
+    navigate("./post")
   }
 
   return (
