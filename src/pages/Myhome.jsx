@@ -1,11 +1,9 @@
-/* eslint-disable react/jsx-pascal-case */
 import React, { useEffect, useState } from "react";
-import axios from 'axios';
+import axios from "axios";
 import Underbar from "../components/Underbar";
 import Card from "../components/Card";
-import { styled } from 'styled-components';
-import "../components/Fonts.css";
-
+import { styled } from "styled-components";
+import "../components/Fonts.css"
 
 const Myhome_container = styled.div`
   display: flex;
@@ -48,7 +46,7 @@ const Myhome_profile_container = styled.div`
 `;
 
 const Myhome_profile_info_container = styled.div`
-  border: 2px solid red;
+  border: 2px solid blue;
   border-bottom: 0.019rem solid #D9D9D9;
   width: 16.75rem;
   padding-top:1.563rem;
@@ -66,14 +64,21 @@ const Myhome_profile_info = styled.div`
   justify-content: center;
   flex-direction: column;
   align-items: center;
+  font-size: 0.75rem;
+  font-family: 'OpenSans';
+  font-weight: 600;
 `;
 
 const Myhome_profile_num = styled.div`
-  border: 2px solid red;
+  //border: 2px solid red;
   width: 2.063rem;
   height: 2.563rem;
+  padding-top:0.25rem;
   display: flex;
   justify-content: center;
+  font-size: 1.5rem;
+  font-family: 'OpenSans';
+  font-weight: 600;
 `;
 
 const Myhome = () => {
@@ -111,7 +116,7 @@ const Myhome = () => {
           <Myhome_follow>+ Follow</Myhome_follow>
           <Myhome_profile_info_container>
             <Myhome_profile_info>
-              Diary
+             Diary
               < Myhome_profile_num>{myhome_user_info1.id}</Myhome_profile_num>
             </Myhome_profile_info>
             <Myhome_profile_info>
