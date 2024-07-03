@@ -29,10 +29,10 @@ const Button = styled.button`
   justify-content: center;
 `;
 
-const Register_btn = () => {
+const Register_btn = ({ onClick }) => {
   return (
     <Btn_wrapper>
-      <Button>
+      <Button onClick={onClick}>
         등록
       </Button>
     </Btn_wrapper>
