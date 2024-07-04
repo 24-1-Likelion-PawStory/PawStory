@@ -1,13 +1,14 @@
-import React from "react";
+import React, {useState , useEffect, useContext} from "react";
 import styled from "styled-components";
 import Layout from "../../Layout";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import Back_arrow from "../../../components/Back_arrow";
-import Next_button from "../../../components/Next_button";
+import Next_button from "../../../components/Next_button_check";
 import Text1 from "../../../components/Text1";
 import Text2 from "../../../components/Text2";
 import Text3 from "../../../components/Text3";
+import { UserContext } from "../../../contexts/User_context";
 
 const Input_box = styled.input`
 position: absolute;
@@ -78,35 +79,52 @@ const BIRTHDAY_MONTH_LIST = Array.from({ length: 12 }, (_, i) => `${i + 1}월`);
 const BIRTHDAY_DAY_LIST = Array.from({ length: 31 }, (_, i) => `${i + 1}일`);
 
 const Name_birth = () => {
+  const {user_data, set_user_data} = useContext(UserContext);
+  const [name,set_name] = useState("");
+  const [year,set_year] = useState(BIRTHDAY_YEAR_LIST[0]);
+  const [month,set_month] = useState(BIRTHDAY_MONTH_LIST[0]);
+  const [day,set_day] = useState(BIRTHDAY_DAY_LIST[0]);
+
+  const [is_next_disabled, set_is_next_disabled] = useState(true);
+
+  useEffect(() => {
+      set_is_next_disabled(!(name && year && month && day));
+  }, [name, year, month, day]);
+
+  const handle_submit = () => {
+    const name = `${name}`;
+    const user_bir = `${year}-${month}-${day}`;
+    set_user_data({ ...user_data, name, user_bir });
+};
 
     return (
         <>
             <Back_arrow></Back_arrow>
             <Text1 text="이름과 생년월일을 알려주세요."/>
             <Text2 text="이름"/>
-            <Input_box type="text" placeholder="이름을 입력해 주세요."></Input_box>
+            <Input_box type="text" value={name} placeholder="이름을 입력해 주세요." onChange={(e) => set_name(e.target.value)}></Input_box>
 
             <Text3 text="생년월일"/>
             <Bitrhday_wrapper>
-            <Yearbox>
+            <Yearbox value={year} onChange={(e) => set_year(e.target.value)}>
             {BIRTHDAY_YEAR_LIST.map((year, index) => (
-                <option key={index}>{year}</option>
+                <option key={index} value={year}>{year}</option>
             ))}
             </Yearbox>
-            <Monthbox>
+            <Monthbox value={month} onChange={(e) => set_month(e.target.value)}>
             {BIRTHDAY_MONTH_LIST.map((month, index) => (
-                <option key={index}>{month}</option>
+                <option key={index} value={month}>{month}</option>
             ))}
             </Monthbox>
-            <Daybox>
+            <Daybox value={day} onChange={(e) => set_day(e.target.value)}>
             {BIRTHDAY_DAY_LIST.map((day, index) => (
-                <option key={index}>{day}</option>
+                <option key={index} value={day}>{day}</option>
             ))}
             </Daybox>
 
 
             </Bitrhday_wrapper>
-            <Next_button></Next_button>
+            <Next_button onClick={handle_submit} disabled={is_next_disabled}></Next_button>
         </>
     );
 };
