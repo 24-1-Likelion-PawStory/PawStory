@@ -49,9 +49,9 @@ const Underbar = () => {
         onClick={() => underbar_handle_navigation("/community")}
       />
       <Underbar_icon
-        src={underbar_selected === "/" ? underbar_loginhome_icon_black : underbar_loginhome_icon_gray}
+        src={underbar_selected === "/home" ? underbar_loginhome_icon_black : underbar_loginhome_icon_gray}
         alt="Login Home"
-        onClick={() => underbar_handle_navigation("/")}
+        onClick={() => underbar_handle_navigation("/home")}
       />
       <Underbar_icon
         src={underbar_selected === "/my" ? underbar_myhome_icon_black : underbar_myhome_icon_gray}

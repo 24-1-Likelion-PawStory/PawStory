@@ -7,7 +7,6 @@ import Toggle from "../components/Toggle";
 import Post_img from "../components/Post_img"
 import Post_text from "../components/Post_text"
 import Register from "../components/Register_btn"
-import Diary_img from "../assets/icons/diary_img.png"
 
 const Write_container = styled.div`
   display: flex;
@@ -21,16 +20,15 @@ const Write_container = styled.div`
 
 const Home_write = () => {
   const [postData, setPostData] = useState({
-    imageUrl: Diary_img,
-    caption: '강아지가 어떻게 왈왈? ㅠ',
-    username: 'huru_bichon',
+    imageUrl: '',
+    caption: '',
+    username: '',
   });
   const navigate = useNavigate();
 
 
   const handleRegister = () => {
     // 추후 백엔드와 연결
-    console.log(postData);
     navigate('/diary', { state: { postData } });
   };
 

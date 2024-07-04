@@ -43,8 +43,8 @@ function App() {
         <Route path= "/register_select/name" element={<Animal_name/>}/>
         <Route path= "/register_select/name/image" element={<Animal_image/>}/>
         <Route path= "/register_select/name/image/complete" element={<Animal_complete/>}/>
-        <Route path= "/" element={<Loginhome/>}/>
-        <Route path= "/post" element={<Home_write/>}/>
+        <Route path= "/home" element={<Loginhome/>}/>
+        <Route path= "/home/post" element={<Home_write/>}/>
         <Route path= "/diary" element={<Home_diary/>}/>
         <Route path= "/my" element={<Myhome/>}/>
         <Route path= "/community" element={<Community/>}/>

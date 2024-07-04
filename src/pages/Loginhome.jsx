@@ -6,6 +6,7 @@ import { styled } from 'styled-components';
 import Card from "../components/Card";
 import Underbar from "../components/Underbar";
 import post_button from "../assets/icons/post_button.png"
+import Hr from "../components/Horizon"
 
 const Loginhome_container =styled.div`
   display: flex;
@@ -71,11 +72,14 @@ const Loginhome = () => {
       <Loginhome_container>
         <Loginhome_images>
           {home_post.map((user) => (
-              <Card
+              <>
+                <Card
                 key={user.id}
                 id={user.id}
                 img={user.avatar}
-              />
+                />
+                <Hr/>
+              </>
             ))}
         </Loginhome_images>
         <Loginhome_post>
