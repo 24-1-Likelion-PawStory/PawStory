@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-pascal-case */
 import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import styled from 'styled-components';
@@ -43,14 +44,14 @@ const Underbar = () => {
   return (
     <Underbar_wrapper>
       <Underbar_icon
-        src={(underbar_selected === "/community" || underbar_selected === "/communityread") ? underbar_community_icon_black : underbar_community_icon_gray}
+        src={underbar_selected === "/community" ? underbar_community_icon_black : underbar_community_icon_gray}
         alt="Community"
         onClick={() => underbar_handle_navigation("/community")}
       />
       <Underbar_icon
-        src={underbar_selected === "/" ? underbar_loginhome_icon_black : underbar_loginhome_icon_gray}
+        src={underbar_selected === "/home" ? underbar_loginhome_icon_black : underbar_loginhome_icon_gray}
         alt="Login Home"
-        onClick={() => underbar_handle_navigation("/")}
+        onClick={() => underbar_handle_navigation("/home")}
       />
       <Underbar_icon
         src={underbar_selected === "/my" ? underbar_myhome_icon_black : underbar_myhome_icon_gray}
@@ -62,4 +63,3 @@ const Underbar = () => {
 };
 
 export default Underbar;
-

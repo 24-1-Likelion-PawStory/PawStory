@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-pascal-case */
 import React from "react";
 import { styled } from "styled-components";
 
@@ -24,5 +25,3 @@ const CommunityButton = ({ text, active, onClick }) => {
 };
 
 export default CommunityButton;
-
-

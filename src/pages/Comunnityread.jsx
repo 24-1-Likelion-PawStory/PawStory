@@ -302,5 +302,3 @@ const Communityread = () => {
 
 export default Communityread;
 
-
-

@@ -12,7 +12,6 @@ const Back_wrapper = styled.div`
 `;
 
 const Back_button = styled.img`
-  //border: 2px solid red;
   width: 1.5rem;
   height: 1.5rem;
   margin: 1.875rem 0 0 1.938rem;
