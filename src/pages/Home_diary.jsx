@@ -66,7 +66,6 @@ const Home_diary = () => {
       <Info/>
       <Hr/>
       <Comment/>
-      <Hr/>
     </Diary_container>
   );
 };
