@@ -5,12 +5,16 @@ export const UserContext = createContext();
 export const UserProvider = ({ children }) => {
   const [user_data, set_user_data] = useState({
     user_id: '',
-    phone_number:'',
+    phone:'',
     email: '',
     name: '',
     user_bir: '',
     password: ''
   });
+
+  const [id_data, set_id_data] = useState({
+    user_id: ''
+  })
 
   const [pet_data, set_pet_data] = useState({
     pet_name: '',
@@ -24,7 +28,7 @@ export const UserProvider = ({ children }) => {
   });
 
   return (
-    <UserContext.Provider value={{ user_data, set_user_data, pet_data, set_pet_data, login_data , set_login_data }}>
+    <UserContext.Provider value={{ user_data, set_user_data, id_data, set_id_data, pet_data, set_pet_data, login_data , set_login_data }}>
       {children}
     </UserContext.Provider>
   );

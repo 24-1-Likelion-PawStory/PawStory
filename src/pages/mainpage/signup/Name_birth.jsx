@@ -92,7 +92,6 @@ const Name_birth = () => {
   }, [name, year, month, day]);
 
   const handle_submit = () => {
-    const name = `${name}`;
     const user_bir = `${year}-${month}-${day}`;
     set_user_data({ ...user_data, name, user_bir });
 };

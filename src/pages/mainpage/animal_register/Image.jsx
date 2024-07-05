@@ -76,10 +76,11 @@ const Image = () => {
       const updated_pet_data = { ...pet_data, pet_photo };
 
       try {
-        await axios.post('/api/user', updated_pet_data);
+        await axios.post('https://pawstory.p-e.kr/users/signup', updated_pet_data);
         navigate('/register_select/name/image/complete'); // POST 후 다음 페이지로 이동
+        console.log('success');
       } catch (error) {
-        console.error('데이터 전송 중 오류가 발생했습니다:', error);
+        console.error('동물 정보 전달 실패:', error);
       }
     };
 

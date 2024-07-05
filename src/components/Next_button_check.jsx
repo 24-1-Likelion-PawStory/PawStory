@@ -1,9 +1,10 @@
-import React from "react";
 import styled from "styled-components";
 import Layout from "../pages/Layout";
 import { Link } from "react-router-dom";
 import { useNavigate,useLocation } from "react-router-dom";
 import {ReactComponent as Next_img} from "../assets/svg_files/next_button_check.svg";
+import React, {useState , useEffect, useContext} from "react";
+import { UserContext } from "../contexts/User_context";
 
 const Next_button_wrapper = styled.button`
 position: absolute;
@@ -20,11 +21,15 @@ svg {
 }
 `
 
-const Next_button_check = ( {disabled} ) => {
+const Next_button_check = ( {disabled , onClick } ) => {
+    const { user_data, set_user_data } = useContext(UserContext);
     const navigate=useNavigate();
     const location=useLocation();
 
-    const handle_click = () => {
+    const handle_click = async() => {
+        if(onClick){
+            await onClick();
+        }
         let next_path="";
 
         switch (location.pathname){
@@ -38,7 +43,7 @@ const Next_button_check = ( {disabled} ) => {
                 next_path = "/signup_name_birth/number/id/password";
                 break;
             case "/signup_name_birth/number/id/password":
-                // next_path = "/signup_name_birth/number/id/password/complete";
+                next_path = "/signup_name_birth/number/id/password/complete";
                 break;
             case "/signup_name_birth/number/id/password/complete":
                 next_path = "/register_select";
@@ -50,7 +55,7 @@ const Next_button_check = ( {disabled} ) => {
                 next_path = "/register_select/name/image";
                 break;
             case "/register_select/name/image":
-                // next_path = "/register_select/name/image/complete";
+                next_path = "/register_select/name/image/complete";
                 break;
             case "/register_select/name/image/complete":
                 next_path = "/loginpage";
