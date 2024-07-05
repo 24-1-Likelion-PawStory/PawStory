@@ -72,11 +72,15 @@ const VideoIcon = styled.img`
   margin-right: 0.25rem;
 `;
 
-const Post_text = () => {
+const Post_text = ({ onTextChange }) => {
   const [text, setText] = useState('');
 
   const handleTextChange = (e) => {
-    setText(e.target.value);
+    const newText = e.target.value;
+    if (newText.length <= 100) {
+      setText(newText);
+      onTextChange(newText);
+    }
   };
 
   return (
@@ -86,6 +90,7 @@ const Post_text = () => {
             value={text}
             onChange={handleTextChange}
             placeholder="사진에 대한 일기를 기록해주세요."
+            maxLength={100}
           />
           <CharCount>{text.length} / 100</CharCount>
           <Button>
