@@ -1,8 +1,8 @@
 /* eslint-disable react/jsx-pascal-case */
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import axios from 'axios';
 import "./Fonts.css";
-import Hr from "./Horizon"
 
 const Profile_container = styled.div`
   display: flex;
@@ -26,12 +26,12 @@ const Username = styled.span`
 `;
 
 const Comment_txt = styled.div`
-  width: 12.5rem;
+  width: 15.625rem;
   height: auto;
   font-family: 'OpenSans';
   font-weight: 400;
   font-size: 0.75rem;
-  margin: 0.625rem 2rem 0 0;
+  margin: 0.625rem 0 0 3.938rem;
 `
 
 const Add = styled.div`
@@ -68,37 +68,36 @@ const Button = styled.div`
   margin: 0 0 0 0.75rem;
 `;  
 
-const Comment = () => {
+const Comment = ({ onAddComment }) => {
   const [newComment,setNewComment] = useState('');
 
   const handleAdd = () => {
-    // if (newComment.trim() === '') return;
-    // axios
-    //     .post(`http://3.36.127.43:8080/${img_id}/comments`,
-    //         {
-    //             commentBody: newComment,
-    //         })
-    //     .then((res)=> {
-    //         setComment([...comment,res.data]);
-    //         setNewComment('');
-    //         window.location.reload();
-    //     })
-    //     .catch((e)=> {
-    //         console.log(e);
-    //     });
+    if (newComment.trim() === '') return;
+    // 실제 서버 통신 대신 임시로 직접 데이터를 생성
+    const fakeResponse = {
+      id: Date.now(),
+      username: 'Anonymous',
+      commentBody: newComment
+    };
+
+    onAddComment(fakeResponse);
+    setNewComment('');
+
+    // axios.post(`http://3.36.127.43:8080/comments`, {
+    //   commentBody: newComment,
+    // })
+    // .then((res) => {
+    //   onAddComment(res.data);  // 새 댓글을 부모 컴포넌트로 전달
+    //   setNewComment('');
+    // })
+    // .catch((e) => {
+    //   console.log(e);
+    // });
   }
 
 
   return (
     <>
-      <Profile_container>
-        <Userimg/>
-        <Username>taein_0926</Username>
-      </Profile_container>
-      <Comment_txt>
-        후루 내심장을가져가도좋아 사랑해
-      </Comment_txt>
-      <Hr/>
       <Add>
         <Write
           type="text"
@@ -111,5 +110,7 @@ const Comment = () => {
     </>
   );
 };
+
+export { Profile_container, Userimg, Username, Comment_txt };
 
 export default Comment;

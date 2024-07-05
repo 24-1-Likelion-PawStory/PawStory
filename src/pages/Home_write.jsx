@@ -22,10 +22,16 @@ const Home_write = () => {
   const [postData, setPostData] = useState({
     imageUrl: '',
     caption: '',
-    username: '',
   });
   const navigate = useNavigate();
 
+  const handleImageChange = (imageUrl) => {
+    setPostData(prev => ({ ...prev, imageUrl }));
+  };
+
+  const handleTextChange = (caption) => {
+    setPostData(prev => ({ ...prev, caption }));
+  };
 
   const handleRegister = () => {
     // 추후 백엔드와 연결
@@ -37,8 +43,8 @@ const Home_write = () => {
       <Write_container>
         <Back_button/>
         <Toggle/>
-        <Post_img/>
-        <Post_text/>
+        <Post_img onImageChange={handleImageChange}/>
+        <Post_text onTextChange={handleTextChange}/>
         <Register onClick={handleRegister}/>
       </Write_container>
     </>
