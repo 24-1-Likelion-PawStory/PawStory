@@ -80,7 +80,7 @@ const StyledLink = styled(Link)`
 const Community_buttons = ["같이해요", "궁금해요", "정보공유", "일상공유"];
 
 const Community = () => {
-  const { posts, setPosts } = useContext(CommunityContext); // setPosts를 추가하여 posts를 설정할 수 있도록 함
+  const { posts, setPosts } = useContext(CommunityContext);
   const [Community_active_button, Community_set_active_button] = useState("같이해요");
   const [Community_filter_posts, Community_set_filter_posts] = useState([]);
   const navigate = useNavigate();
@@ -90,9 +90,13 @@ const Community = () => {
     Community_filter_posts_tag(buttonText);
   };
 
-  const Community_filter_posts_tag = (tag) => {
-    const filteredPosts = posts.filter(post => post.tag.name === tag);
-    Community_set_filter_posts(filteredPosts);
+  const Community_filter_posts_tag = async (tag) => {
+    try {
+      const response = await axios.get(`/community/posts/tag/${tag.toLowerCase()}`);
+      Community_set_filter_posts(response.data);
+    } catch (error) {
+      console.error("Error fetching posts by tag:", error);
+    }
   };
 
   useEffect(() => {
@@ -152,7 +156,6 @@ const Community = () => {
 };
 
 export default Community;
-
 
 
 
