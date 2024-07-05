@@ -1,12 +1,13 @@
-import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import Underbar from "../components/Underbar";
-import { styled } from "styled-components";
+import React, { useState, useEffect, useContext } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import styled from "styled-components";
 import "../components/Fonts.css";
+import Underbar from "../components/Underbar";
 import Communitybutton from "../components/Communitybutton";
 import post_button from "../assets/icons/post_button.png";
 import Communitypost from "../components/Communitypost";
-import axios from "axios";
+import { CommunityContext } from "../contexts/Community_context";
+import axiosInstance from "../axios"; // axiosInstance를 가져옴
 
 const Community_container = styled.div`
   width: 20rem;
@@ -56,7 +57,7 @@ const Community_bottom_container = styled.div`
 const Community_post_button = styled.img`
   width: 3.25rem;
   height: 3.25rem;
-  cursor: pointer; 
+  cursor: pointer;
 `;
 
 const Community_post_button_wrapper = styled.div`
@@ -67,50 +68,53 @@ const Community_post_button_wrapper = styled.div`
   justify-content: flex-end;
 `;
 
+const StyledLink = styled(Link)`
+  text-decoration: none;
+  color: black;
+
+  &:visited {
+    color: black;
+  }
+`;
+
 const Community_buttons = ["같이해요", "궁금해요", "정보공유", "일상공유"];
 
 const Community = () => {
+  const { posts, setPosts } = useContext(CommunityContext);
   const [Community_active_button, Community_set_active_button] = useState("같이해요");
-  const [Community_posts, Community_set_posts] = useState([]);
   const [Community_filter_posts, Community_set_filter_posts] = useState([]);
   const navigate = useNavigate();
-
-  // Mock data
-  const mockData = [
-    { id: 1, title: 'Mock Post 1', content: 'This is a mock post.', tag: { name: '같이해요' }, user: { user_id: 'user1' }, created_at: '2024-07-01T09:04:46.232082+09:00' },
-    { id: 2, title: 'Mock Post 2', content: 'This is another mock post.', tag: { name: '궁금해요' }, user: { user_id: 'user2' }, created_at: '2024-07-02T09:04:46.232082+09:00' },
-    { id: 3, title: 'Mock Post 3', content: 'This is yet another mock post.', tag: { name: '정보공유' }, user: { user_id: 'user3' }, created_at: '2024-07-03T09:04:46.232082+09:00' },
-  ];
 
   const Community_handle_button_click = (buttonText) => {
     Community_set_active_button(buttonText);
     Community_filter_posts_tag(buttonText);
   };
 
-  const Community_filter_posts_tag = (tag) => {
-    const filteredPosts = Community_posts.filter(post => post.tag.name === tag);
-    Community_set_filter_posts(filteredPosts);
+  const Community_filter_posts_tag = async (tag) => {
+    try {
+      const response = await axiosInstance.get(`community/posts/tag/${tag.toLowerCase()}`);
+      Community_set_filter_posts(response.data);
+    } catch (error) {
+      console.error("Error fetching posts by tag:", error);
+    }
   };
 
   useEffect(() => {
-    const Community_fetch_data = async () => {
+    const fetchPosts = async () => {
       try {
-        // Mock API call
-        // const response = await axios.get('https://your-api-endpoint/posts');
-        // Mock data used here
-        Community_set_posts(mockData);
-        Community_filter_posts_tag(Community_active_button);
+        const response = await axiosInstance.get("community/posts");
+        setPosts(response.data);
       } catch (error) {
-        console.log(error);
+        console.error("Error fetching posts:", error);
       }
     };
 
-    Community_fetch_data();
-  }, [Community_active_button]);
+    fetchPosts();
+  }, []);
 
-  const Community_handle_post_click = (post) => {
-    navigate(`/communityread?id=${post.id}`, { state: { postId: post.id } });
-  };
+  useEffect(() => {
+    Community_filter_posts_tag(Community_active_button);
+  }, [Community_active_button, posts]);
 
   return (
     <>
@@ -131,15 +135,15 @@ const Community = () => {
         </Community_top_container>
         <Community_bottom_container>
           {Community_filter_posts.map(post => (
-            <Communitypost 
-              key={post.id}
-              id={post.id}
-              title={post.title}
-              content={post.content}
-              tag={post.tag.name}
-              user_id={post.user.user_id}
-              onClick={() => Community_handle_post_click(post)}
-            />
+            <StyledLink key={post.id} to={`/communityread?id=${post.id}`}>
+              <Communitypost 
+                id={post.id}
+                title={post.title}
+                content={post.content}
+                tag={post.tag.name}
+                user_id={post.user.user_id}
+              />
+            </StyledLink>
           ))}
         </Community_bottom_container>
         <Community_post_button_wrapper>

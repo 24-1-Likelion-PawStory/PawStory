@@ -25,24 +25,12 @@ const Myhome_profile_img =styled.img`
   border-radius: 4rem;
 `;
 
-const Myhome_follow = styled.button`
-  width: 4.25rem;
-  height: 1.313rem;
-  background-color: transparent;  // 버튼 배경 투명
-  color: #FFAA2F;
-  border: 0.063rem solid #FFD18E;
-  border-radius: 0.5rem; 
-  cursor: pointer;
-`;
-
 const Myhome_profile_container = styled.div`
-  //border: 2px solid blue;
   padding-top:3.938rem;
   width: 23.438rem;
   display:flex;
   flex-direction: column;
   align-items: center;
-
 `;
 
 const Myhome_profile_info_container = styled.div`
@@ -52,6 +40,12 @@ const Myhome_profile_info_container = styled.div`
   padding-bottom:0.813rem;
   display: flex;
   justify-content: space-between;
+`;
+
+const Myhome_profile_info_name = styled.div`
+  font-size: 1.063rem;
+  font-family: 'OpenSans';
+  font-weight: 600;
 `;
 
 const Myhome_profile_info = styled.div`
@@ -69,7 +63,6 @@ const Myhome_profile_info = styled.div`
 `;
 
 const Myhome_profile_num = styled.div`
-  //border: 2px solid red;
   width: 2.063rem;
   height: 2.563rem;
   padding-top:0.25rem;
@@ -81,14 +74,16 @@ const Myhome_profile_num = styled.div`
 `;
 
 const Myhome = () => {
-  const [myhome_user_info1, myhome_set_user_info1] = useState([]);
+  const [myhome_user_info1, myhome_set_user_info1] = useState({});
   const [myhome_user_info2, myhome_set_user_info2] = useState([]);
 
   useEffect(() => {
+    const userId = localStorage.getItem('userId'); // 로컬 스토리지에서 사용자 ID 가져오기
+
     axios
-      .get(`https://reqres.in/api/users/${1}`)
+      .get(`https://pawstory.p-e.kr/accounts/${userId}`)
       .then((res) => {
-        myhome_set_user_info1(res.data.data); // 데이터를 상태에 저장
+        myhome_set_user_info1(res.data); // 데이터를 상태에 저장
       })
       .catch((e) => {
         console.log(e);
@@ -97,9 +92,9 @@ const Myhome = () => {
 
   useEffect(() => {
     axios
-      .get(`https://reqres.in/api/users?page=1&per_page=9`)
+      .get(`https://pawstory.p-e.kr/diaries/diary`)
       .then((res) => {
-        myhome_set_user_info2(res.data.data); // 데이터를 상태에 저장
+        myhome_set_user_info2(res.data); // 데이터를 상태에 저장
       })
       .catch((e) => {
         console.log(e);
@@ -110,30 +105,31 @@ const Myhome = () => {
     <>
       <Myhome_container>
         <Myhome_profile_container>
-          <Myhome_profile_img src={myhome_user_info1.avatar}/>
-            <h3>{myhome_user_info1.first_name}</h3>
-          <Myhome_follow>+ Follow</Myhome_follow>
+          <Myhome_profile_img src={myhome_user_info1.pet_photo} />
+          <Myhome_profile_info_name>
+            {myhome_user_info1.user_id}
+          </Myhome_profile_info_name>
           <Myhome_profile_info_container>
             <Myhome_profile_info>
-             Diary
-              < Myhome_profile_num>{myhome_user_info1.id}</Myhome_profile_num>
+              Diary
+              <Myhome_profile_num>{myhome_user_info1.post_count}</Myhome_profile_num>
             </Myhome_profile_info>
             <Myhome_profile_info>
               Followers
-              < Myhome_profile_num>{myhome_user_info1.id}</Myhome_profile_num>
+              <Myhome_profile_num>{myhome_user_info1.follower_count}</Myhome_profile_num>
             </Myhome_profile_info>
             <Myhome_profile_info>
               Following
-              < Myhome_profile_num>{myhome_user_info1.id}</Myhome_profile_num>
+              <Myhome_profile_num>{myhome_user_info1.following_count}</Myhome_profile_num>
             </Myhome_profile_info>
           </Myhome_profile_info_container>
         </Myhome_profile_container>
 
-        {myhome_user_info2.map((user) => (
+        {myhome_user_info2.map((diary) => (
           <Card
-            key={user.id}
-            id={user.id}
-            img={user.avatar}
+            key={diary.id}
+            id={diary.id}
+            img={diary.photo}
           />
         ))}
       </Myhome_container>

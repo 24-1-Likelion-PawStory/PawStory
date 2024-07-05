@@ -7,6 +7,7 @@ import Card from "../components/Card";
 import Underbar from "../components/Underbar";
 import post_button from "../assets/icons/post_button.png"
 import Hr from "../components/Horizon"
+import axiosInstance from "../axios";
 
 const Loginhome_container =styled.div`
   display: flex;
@@ -53,10 +54,12 @@ const Loginhome = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    axios
-      .get(`https://~~/diaries/diary`)
+    
+    axiosInstance
+      .get(`diaries/diary`)
       .then((res) => {
-        set_home_post(res.data); // 데이터를 상태에 저장
+        console.log(res)
+        set_home_post(res.data.data); // 데이터를 상태에 저장
       })
       .catch((e) => {
         console.log(e);
@@ -71,7 +74,7 @@ const Loginhome = () => {
     <>
       <Loginhome_container>
         <Loginhome_images>
-          {home_post.map((user) => (
+          {/* {home_post.map((user) => (
               <>
                 <Card
                 key={user.id}
@@ -80,7 +83,7 @@ const Loginhome = () => {
                 />
                 <Hr/>
               </>
-            ))}
+            ))} */}
         </Loginhome_images>
         <Loginhome_post>
           <Loginhome_post_button

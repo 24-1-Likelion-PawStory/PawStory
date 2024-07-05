@@ -1,8 +1,11 @@
-import React, { useState } from "react";
-import Back from "../components/Back";
-import { styled } from "styled-components";
+import React, { useState, useContext } from "react";
+import { useNavigate } from "react-router-dom";
+import styled from "styled-components";
 import "../components/Fonts.css";
+import Back from "../components/Back";
 import Communitybutton from "../components/Communitybutton";
+import { CommunityContext } from "../contexts/Community_context";
+import axiosInstance from "../axios";
 
 const Communitywrite_container = styled.div`
   width: 23.438rem;
@@ -31,7 +34,7 @@ const Communitywrite_tag = styled.div`
   justify-content: space-around;
 `;
 
-const Communitywrite_writetitle = styled.input`
+const Communitywrite_write_title = styled.input`
   border: 0.031rem solid #C4C4C4;
   height: 1.5rem;
   width: 15.2rem;
@@ -55,7 +58,7 @@ const Communitywrite_writetitle = styled.input`
   }
 `;
 
-const Communitywrite_writecontent = styled.textarea`
+const Communitywrite_write_content = styled.textarea`
   border: 0.031rem solid #C4C4C4;
   height: 24.375rem;
   width: 17.8rem;
@@ -105,71 +108,90 @@ const Communitywrite_share = styled.button`
 `;
 
 const Communitywrite = () => {
-  const [communitywrite_active_button, communitywrite_set_active_button] = useState(""); // 태그
+  const navigate = useNavigate();
+  const { addPost } = useContext(CommunityContext);
+  const [activeButton, setActiveButton] = useState(""); // 태그
   const [clicked, setClicked] = useState(false); // 버튼 클릭 상태
+  const [title, setTitle] = useState(""); // 제목 입력란
+  const [content, setContent] = useState(""); // 본문 입력란
 
-  const communitywrite_handle_button_click = (communitywrite_button_Text) => { //태그
-    communitywrite_set_active_button(communitywrite_button_Text);
+  const handleButtonClick = (buttonText) => { // 태그
+    setActiveButton(buttonText);
   };
 
-  const [communitywrite_title, communitywrite_set_title] = useState(""); //제목입력란
-
-  const communitywrite_handle_title = (e) => {
-    communitywrite_set_title(e.target.value);
+  const handleTitleChange = (e) => {
+    setTitle(e.target.value);
   };
 
-  const [communitywrite_content, communitywrite_set_content] = useState("");//본문입력란
-
-  const communitywrite_handle_content = (e) => {
-    communitywrite_set_content(e.target.value);
+  const handleContentChange = (e) => {
+    setContent(e.target.value);
   };
 
-  const communitywrite_handle_share_click = () => {
+  const handleShareClick = async () => {
     setClicked(prevState => !prevState); // 클릭 상태 토글
 
-    communitywrite_set_content(""); // 본문 입력란 비우기
+    const newPost = {
+      title: title,
+      content: content,
+      tag: activeButton,
+      // user 정보를 여기서 제거합니다.
+    };
+
+    console.log("New Post Data:", newPost); // 요청 데이터 로그
+
+    try {
+      const response = await axiosInstance.post("community/posts/create", newPost);
+      addPost(response.data.data); // 서버로부터 반환된 데이터를 추가
+      setTitle(""); // 제목 입력란 비우기
+      setContent(""); // 본문 입력란 비우기
+      setActiveButton(""); // 태그 초기화
+      navigate('/community'); // Community 페이지로 이동
+    } catch (error) {
+      console.error("Error creating post:", error);
+      console.error("Response data:", error.response?.data); // 서버 응답 로그
+    }
   };
 
-  const community_buttons = ["같이해요", "궁금해요", "정보공유", "일상공유"];
+  const communityButtons = ["같이해요", "궁금해요", "정보공유", "일상공유"];
 
   return (
-    <>
-      <Communitywrite_container>
-        <Back />
-        <Communitywrite_title>
-          분류
-        </Communitywrite_title>
-        <Communitywrite_tag>
-          {community_buttons.map((text) => (
-            <Communitybutton
-              key={text}
-              text={text}
-              active={communitywrite_active_button === text}
-              onClick={() => communitywrite_handle_button_click(text)}
-            />
-          ))}
-        </Communitywrite_tag>
-        <Communitywrite_title>
-          제목
-          <Communitywrite_writetitle
-            placeholder="제목을 입력해 주세요."
-            value={communitywrite_title}
-            onChange={communitywrite_handle_title} />
-        </Communitywrite_title>
-        <Communitywrite_writecontent
-          placeholder="본문을 입력해 주세요."
-          value={communitywrite_content}
-          onChange={communitywrite_handle_content}
-          maxLength={100} />
-        <Communitywrite_share 
-          clicked={clicked} // 상태를 props로 전달
-          onClick={communitywrite_handle_share_click} // 클릭 핸들러 추가
-        >
-          공유
-        </Communitywrite_share>
-      </Communitywrite_container>
-    </>
+    <Communitywrite_container>
+      <Back />
+      <Communitywrite_title>분류</Communitywrite_title>
+      <Communitywrite_tag>
+        {communityButtons.map((text) => (
+          <Communitybutton
+            key={text}
+            text={text}
+            active={activeButton === text}
+            onClick={() => handleButtonClick(text)}
+          />
+        ))}
+      </Communitywrite_tag>
+      <Communitywrite_title>
+        제목
+        <Communitywrite_write_title
+          placeholder="제목을 입력해 주세요."
+          value={title}
+          onChange={handleTitleChange}
+        />
+      </Communitywrite_title>
+      <Communitywrite_write_content
+        placeholder="본문을 입력해 주세요."
+        value={content}
+        onChange={handleContentChange}
+      />
+      <Communitywrite_share 
+        clicked={clicked} // 상태를 props로 전달
+        onClick={handleShareClick} // 클릭 핸들러 추가
+      >
+        공유
+      </Communitywrite_share>
+    </Communitywrite_container>
   );
 };
 
 export default Communitywrite;
+
+
+

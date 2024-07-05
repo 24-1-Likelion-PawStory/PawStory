@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
-import { styled } from 'styled-components';
-import "../components/Fonts.css";
+import React, { useState, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
+import styled from 'styled-components';
 import Communityread_dropdown_ellipsis from '../assets/icons/ellipsis.png';
-
+import { CommunityContext } from '../contexts/Community_context';
+import axios from 'axios';
 const Communityread_dropdown_container = styled.div`
   width: 4rem;
   height: 1.5rem;
@@ -46,23 +47,29 @@ const Communityread_dropdown_item = styled.div`
   }
 `;
 
-const Communityread_dropdown = () => {
+const Communityread_dropdown = ({ setIsEditing, postId }) => {
   const [dropdown_show, set_dropdown_show] = useState(false);
+  const { deletePost } = useContext(CommunityContext);
+  const navigate = useNavigate();
 
   const toggle_dropdown = () => {
     set_dropdown_show(!dropdown_show);
   };
 
   const handle_edit = () => {
-    console.log('Edit clicked');
+    setIsEditing(true);
     set_dropdown_show(false);
-    // Edit
   };
 
-  const handle_delete = () => {
-    console.log('Delete clicked');
-    set_dropdown_show(false);
-    // Delete
+  const handle_delete = async () => {
+    try {
+      await axios.delete(`/community/posts/${postId}`);
+      deletePost(postId);
+      set_dropdown_show(false);
+      navigate('/community');
+    } catch (error) {
+      console.error('Error deleting post:', error);
+    }
   };
 
   return (
@@ -79,4 +86,6 @@ const Communityread_dropdown = () => {
 };
 
 export default Communityread_dropdown;
+
+
 
