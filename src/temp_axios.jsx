@@ -1,12 +1,12 @@
 import axios from 'axios';
 
-const axiosInstance1 = axios.create({
+const axiostemps= axios.create({
     baseURL: 'https://pawstory.p-e.kr/', // Base URL for the API
 });
 
-axiosInstance1.interceptors.request.use(
+axiostemps.interceptors.request.use(
     config => {
-        const token = localStorage.getItem('temp_tokken');
+        const token = localStorage.getItem('temp_accesstoken');
         if (token) {
             config.headers['Authorization'] = `Bearer ${token}`;
         }
@@ -17,4 +17,4 @@ axiosInstance1.interceptors.request.use(
     }
 );
 
-export default axiosInstance1;
+export default axiostemps;

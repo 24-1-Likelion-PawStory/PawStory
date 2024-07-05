@@ -115,8 +115,9 @@ const Password = () => {
     const updated_user_data = { ...user_data, password };
 
     try {
-      await axios.post('https://pawstory.p-e.kr/users/signup', updated_user_data);
+      const res = await axios.post('https://pawstory.p-e.kr/users/signup', updated_user_data);
       navigate('/signup_name_birth/number/id/password/complete'); // POST 후 다음 페이지로 이동
+      localStorage.setItem("temp_tokken",res.data.temp_access_token)
       console.log('sign up complete');
     } catch (error) {
       console.error('데이터 전송 중 오류가 발생했습니다:', error);

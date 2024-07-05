@@ -7,6 +7,9 @@ import Text1 from "../../../components/Text1";
 import { ReactComponent as Select_button_img } from "../../../assets/svg_files/register/Select_button.svg";
 import { UserContext } from "../../../contexts/User_context";
 import axios from "axios";
+import axiosInstance from "../../../axios";
+import axiostemps from "../../../temp_axios";
+import axiosInstance1 from "../../../axios";
 
 const Input_wrapper = styled.button`
   position: absolute;
@@ -74,11 +77,7 @@ const Image = () => {
     }
 
     try {
-      await axios.post("https://pawstory.p-e.kr/users/pet_info", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
+      await axiosInstance1.post("https://pawstory.p-e.kr/users/pet_info", formData);
       navigate("/register_select/name/image/complete"); // POST 후 다음 페이지로 이동
       console.log("success");
     } catch (error) {
