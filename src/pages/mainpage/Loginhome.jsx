@@ -21,6 +21,9 @@ const Login_botton_wrapper = styled.button`
     border:none;
     background:none;
     top:34.375rem;
+    left: 1.875rem;
+
+
 `
 const Not_yet_wrapper = styled.div`
     width:18.75rem;
