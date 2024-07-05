@@ -75,13 +75,6 @@ const Community = () => {
   const [Community_filter_posts, Community_set_filter_posts] = useState([]);
   const navigate = useNavigate();
 
-  // Mock data
-  const mockData = [
-    { id: 1, title: 'Mock Post 1', content: 'This is a mock post.', tag: { name: '같이해요' }, user: { user_id: 'user1' }, created_at: '2024-07-01T09:04:46.232082+09:00' },
-    { id: 2, title: 'Mock Post 2', content: 'This is another mock post.', tag: { name: '궁금해요' }, user: { user_id: 'user2' }, created_at: '2024-07-02T09:04:46.232082+09:00' },
-    { id: 3, title: 'Mock Post 3', content: 'This is yet another mock post.', tag: { name: '정보공유' }, user: { user_id: 'user3' }, created_at: '2024-07-03T09:04:46.232082+09:00' },
-  ];
-
   const Community_handle_button_click = (buttonText) => {
     Community_set_active_button(buttonText);
     Community_filter_posts_tag(buttonText);
@@ -95,10 +88,8 @@ const Community = () => {
   useEffect(() => {
     const Community_fetch_data = async () => {
       try {
-        // Mock API call
-        // const response = await axios.get('https://your-api-endpoint/posts');
-        // Mock data used here
-        Community_set_posts(mockData);
+        const response = await axios.get(`http://3.39.150.64/community/posts/posts`);
+        Community_set_posts(response.data);
         Community_filter_posts_tag(Community_active_button);
       } catch (error) {
         console.log(error);
