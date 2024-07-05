@@ -26,7 +26,7 @@ const Post_image = styled.img`
   object-fit: contain;
 `;
 
-const Post_img = ({ onImageChange }) => {
+const Post_img = ({ formData, postData, onImageChange }) => {
   const [selected_image,set_selected_image] = useState(null);
   const fileInputRef = useRef(null);
 
@@ -34,8 +34,15 @@ const Post_img = ({ onImageChange }) => {
     const file = event.target.files[0];
       if(file) {
         const image_url = URL.createObjectURL(file);
+        console.log(postData, image_url);
         set_selected_image(image_url);
         onImageChange(image_url);
+        formData.append('photo', file);
+
+        //const formData = new FormData();
+        //formData.append('photo', file);
+        //set_selected_image(formData);
+        //onImageChange(formData);
       }
   }
 

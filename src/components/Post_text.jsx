@@ -72,7 +72,7 @@ const VideoIcon = styled.img`
   margin-right: 0.25rem;
 `;
 
-const Post_text = ({ onTextChange }) => {
+const Post_text = ({ formData, onTextChange }) => {
   const [text, setText] = useState('');
 
   const handleTextChange = (e) => {

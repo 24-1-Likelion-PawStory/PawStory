@@ -7,7 +7,7 @@ import Communitybutton from "../components/Communitybutton";
 import post_button from "../assets/icons/post_button.png";
 import Communitypost from "../components/Communitypost";
 import { CommunityContext } from "../contexts/Community_context";
-import axiosInstance from "../axios"; // axiosInstance를 가져옴
+import axiosInstance from "../axios"; 
 
 const Community_container = styled.div`
   width: 20rem;
@@ -91,8 +91,9 @@ const Community = () => {
   };
 
   const Community_filter_posts_tag = async (tag) => {
+    console.log(`Fetching posts with tag: ${tag}`); // 태그 값을 콘솔에 출력
     try {
-      const response = await axiosInstance.get(`community/posts/tag/${tag.toLowerCase()}`);
+      const response = await axiosInstance.get(`community/posts/tag/${encodeURIComponent(tag.toLowerCase())}`);
       Community_set_filter_posts(response.data);
     } catch (error) {
       console.error("Error fetching posts by tag:", error);
@@ -156,6 +157,7 @@ const Community = () => {
 };
 
 export default Community;
+
 
 
 
