@@ -1,7 +1,9 @@
 import React, { useState, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';  // React Router의 useNavigate 훅을 가져옵니다.
 import { styled } from 'styled-components';
 import "../components/Fonts.css";
 import Communityread_dropdown_ellipsis from '../assets/icons/ellipsis.png';
+import { CommunityContext } from '../contexts/Community_context';
 
 const Communityread_dropdown_container = styled.div`
   width: 4rem;
@@ -46,8 +48,10 @@ const Communityread_dropdown_item = styled.div`
   }
 `;
 
-const Communityread_dropdown = ({ setIsEditing }) => {
+const Communityread_dropdown = ({ setIsEditing, postId }) => {
   const [dropdown_show, set_dropdown_show] = useState(false);
+  const { deletePost } = useContext(CommunityContext);
+  const navigate = useNavigate();  // useNavigate 훅을 사용하여 navigate 함수를 가져옵니다.
 
   const toggle_dropdown = () => {
     set_dropdown_show(!dropdown_show);
@@ -59,9 +63,9 @@ const Communityread_dropdown = ({ setIsEditing }) => {
   };
 
   const handle_delete = () => {
-    console.log('Delete clicked');
+    deletePost(postId);
     set_dropdown_show(false);
-    // 삭제 로직 추가 가능
+    navigate('/community');  // 삭제 후 /community 페이지로 이동합니다.
   };
 
   return (
@@ -78,4 +82,6 @@ const Communityread_dropdown = ({ setIsEditing }) => {
 };
 
 export default Communityread_dropdown;
+
+
 

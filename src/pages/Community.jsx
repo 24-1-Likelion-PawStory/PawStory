@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import Underbar from "../components/Underbar";
 import styled from "styled-components";
 import "../components/Fonts.css";
+import Underbar from "../components/Underbar";
 import Communitybutton from "../components/Communitybutton";
 import post_button from "../assets/icons/post_button.png";
-import Communitypost from "../components/Communitypost";
+import Communitypost from "../components/Communitypost"; // 수정된 Communitypost를 import
 import { CommunityContext } from "../contexts/Community_context";
 
 const Community_container = styled.div`
@@ -138,6 +138,7 @@ const Community = () => {
 };
 
 export default Community;
+
 
 
 

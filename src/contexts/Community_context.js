@@ -25,17 +25,33 @@ export const CommunityProvider = ({ children }) => {
     );
   };
 
-  const updatePost = (postId, newTitle, newContent) => {
+  const updatePost = (postId, title, content) => {
+    setPosts(posts.map(post =>
+      post.id === postId ? { ...post, title, content } : post
+    ));
+  };
+
+  const deletePost = (postId) => {
+    setPosts(posts.filter(post => post.id !== postId));
+  };
+
+  const deleteComment = (postId, commentId) => {
+    console.log(`Deleting comment with postId: ${postId} and commentId: ${commentId}`);
     setPosts((prevPosts) =>
       prevPosts.map((post) =>
-        post.id === postId ? { ...post, title: newTitle, content: newContent } : post
+        post.id === postId
+          ? { ...post, comments: post.comments.filter(comment => comment.id !== commentId) }
+          : post
       )
     );
   };
 
   return (
-    <CommunityContext.Provider value={{ posts, addPost, addComment, toggleLike, updatePost }}>
+    <CommunityContext.Provider value={{ posts, addPost, addComment, toggleLike, updatePost, deletePost, deleteComment }}>
       {children}
     </CommunityContext.Provider>
   );
 };
+
+export default CommunityProvider;
+

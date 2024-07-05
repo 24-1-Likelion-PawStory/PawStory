@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import { useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { styled } from "styled-components";
 import "../components/Fonts.css";
 import Communitypost_response from "../components/Communitypost_response";
@@ -7,6 +8,7 @@ import Communityread_like_black from '../assets/icons/like_black.png';
 import Communityread_like_pink from '../assets/icons/like_pink.png';
 import Back from "../components/Back";
 import Communityread_dropdown from "../components/Communityread_dropdown";
+import Communityread_dropdown2 from "../components/Communityread_dropdown2";
 import { CommunityContext } from "../contexts/Community_context";
 
 const Communityread_container = styled.div`
@@ -76,7 +78,6 @@ const Communityread_writer_date = styled.div`
 `;
 
 const Communityread_post = styled.div`
-  height: 11rem;
   width: 18.75rem;
   display: flex;
   flex-direction: column;
@@ -91,23 +92,68 @@ const Communityread_post_post = styled.div`
 `;
 
 const Communityread_post_title = styled.div`
-  height: 2.063rem;
+  height: auto;
   width: 18.75rem;
   display: flex;
   align-items: center;
   font-size: 0.875rem;
   font-family: "OpenSans";
   font-weight: 600;
+  margin-bottom: 0.5rem;
+  word-wrap: break-word;
+`;
+
+const Communityread_post_title_edit = styled.textarea`
+  border: none;
+  height: auto;
+  width: 18.75rem;
+  display: flex;
+  align-items: center;
+  font-size: 0.875rem;
+  font-family: "OpenSans";
+  font-weight: 600;
+  resize: none;
+  overflow: hidden;
+  word-wrap: break-word;
+
+  &:focus {
+    outline: none;
+  }
 `;
 
 const Communityread_post_content = styled.div`
-  height: 2.063rem;
+  height: auto;
   width: 18.75rem;
   display: flex;
   align-items: center;
   font-size: 0.75rem;
   font-family: "OpenSans";
   font-weight: 400;
+  word-wrap: break-word;
+`;
+
+const Communityread_post_content_edit = styled.textarea`
+  border: none;
+  height: auto;
+  width: 18.75rem;
+  display: flex;
+  align-items: center;
+  font-size: 0.75rem;
+  font-family: "OpenSans";
+  font-weight: 400;
+  resize: none;
+  overflow: hidden;
+  word-wrap: break-word;
+
+  &:focus {
+    outline: none;
+  }
+`;
+
+const Communityread_post_content_edit_button = styled.div`
+  width: 18.75rem;
+  display: flex;
+  justify-content: flex-end;
 `;
 
 const Communityread_post_response = styled.div`
@@ -151,6 +197,7 @@ const Communityread_comment_container = styled.div`
 const Communityread_comment_profile_wrapper = styled.div`
   padding-top: 0.7rem;
   display: flex;
+  justify-content: space-between;
 `;
 
 const Communityread_comment_profile = styled.div`
@@ -170,7 +217,13 @@ const Communityread_comment_name = styled.div`
   font-weight: 400;
 `;
 
+const Communityread_comment_profile_wrapper2 = styled.div`
+  padding-top: 0.7rem;
+  display: flex;
+`;
+
 const Communityread_comment_text = styled.div`
+//border:1px solid red;
   height: 1.5rem;
   width: 17.25rem;
   display: flex;
@@ -179,6 +232,7 @@ const Communityread_comment_text = styled.div`
   font-size: 0.75rem;
   font-family: "OpenSans";
   font-weight: 400;
+  
 `;
 
 const Communityread_write_comment = styled.div`
@@ -225,10 +279,11 @@ const Communityread_write_comment_post = styled.button`
 `;
 
 const Communityread = () => {
-  const { posts, addComment, toggleLike, updatePost } = useContext(CommunityContext);
+  const { posts, addComment, toggleLike, updatePost, deletePost } = useContext(CommunityContext);
   const [community_read_comment, set_community_read_comment] = useState("");
   const location = useLocation();
   const postId = new URLSearchParams(location.search).get("id");
+  const navigate = useNavigate();
 
   const community_read_post = posts.find(post => post.id === Number(postId)) || {};
 
@@ -238,6 +293,7 @@ const Communityread = () => {
 
   const handle_comment = () => {
     const newComment = {
+      id: new Date().getTime(), // Assuming each comment gets a unique ID
       content: community_read_comment,
       user: { user_id: "test1" }
     };
@@ -254,6 +310,11 @@ const Communityread = () => {
     setIsEditing(false);
   };
 
+  const handleDelete = () => {
+    deletePost(Number(postId));
+    navigate('/community'); // 커뮤니티 메인 페이지로 이동
+  };
+
   return (
     <Communityread_container>
       <Back />
@@ -265,24 +326,25 @@ const Communityread = () => {
               <Communityread_writer_name>익명</Communityread_writer_name>
               <Communityread_writer_date>{community_read_post.created_at ? new Date(community_read_post.created_at).toLocaleDateString() : '날짜'}</Communityread_writer_date>
             </Communityread_writer_text>
-            <Communityread_dropdown setIsEditing={setIsEditing} />
+            <Communityread_dropdown setIsEditing={setIsEditing} postId={Number(postId)} />
           </Communityread_writer_text2>
         </Communityread_writer>
         <Communityread_post>
           <Communityread_post_post>
             {isEditing ? (
               <>
-                <input 
+                <Communityread_post_title_edit
                   type="text" 
                   value={editedTitle} 
                   onChange={(e) => setEditedTitle(e.target.value)} 
                 />
-                <textarea 
+                <Communityread_post_content_edit 
                   value={editedContent} 
                   onChange={(e) => setEditedContent(e.target.value)}
                 />
-                <button onClick={handleSave}>저장</button>
-                <button onClick={() => setIsEditing(false)}>취소</button>
+                <Communityread_post_content_edit_button>
+                  <Communityread_write_comment_post onClick={handleSave}>저장</Communityread_write_comment_post>
+                </Communityread_post_content_edit_button>
               </>
             ) : (
               <>
@@ -301,11 +363,14 @@ const Communityread = () => {
           </Communityread_post_response>
         </Communityread_post>
         <Communityread_comment_wrapper>
-          {community_read_post.comments && community_read_post.comments.map((comment, index) => (
-            <Communityread_comment_container key={index}>
+          {community_read_post.comments && community_read_post.comments.map((comment) => (
+            <Communityread_comment_container key={comment.id}>
               <Communityread_comment_profile_wrapper>
+                <Communityread_comment_profile_wrapper2>
                 <Communityread_comment_profile />
                 <Communityread_comment_name>익명</Communityread_comment_name>
+                </Communityread_comment_profile_wrapper2>
+                <Communityread_dropdown2 postId={Number(postId)} commentId={comment.id} />
               </Communityread_comment_profile_wrapper>
               <Communityread_comment_text>
                 {comment.content}
@@ -321,7 +386,10 @@ const Communityread = () => {
             value={community_read_comment}
             onChange={(e) => set_community_read_comment(e.target.value)}
           />
-          <Communityread_write_comment_post onClick={handle_comment}>
+          <Communityread_write_comment_post 
+            onClick={handle_comment}
+            disabled={!community_read_comment.trim()} // 댓글이 없으면 버튼 비활성화
+          >
             등록
           </Communityread_write_comment_post>
         </Communityread_write_comment>
@@ -331,7 +399,3 @@ const Communityread = () => {
 };
 
 export default Communityread;
-
-
-
-
