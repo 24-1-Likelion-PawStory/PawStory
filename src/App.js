@@ -26,9 +26,12 @@ import Signup_name_birth from "./pages/mainpage/signup/Name_birth";
 import Signup_number from "./pages/mainpage/signup/Number_email";
 import Signup_password from "./pages/mainpage/signup/Password";
 
+import { CommunityProvider } from './contexts/Community_context.js';
+
 function App() {
   return (
     <UserProvider>
+      <CommunityProvider>
       <BrowserRouter>
         <Routes>
         <Route element={<Layout />}>
@@ -55,6 +58,7 @@ function App() {
           </Route>
         </Routes>
       </BrowserRouter>
+      </CommunityProvider>
     </UserProvider>
   );
 }

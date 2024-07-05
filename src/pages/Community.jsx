@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState, useEffect, useContext } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import Underbar from "../components/Underbar";
-import { styled } from "styled-components";
+import styled from "styled-components";
 import "../components/Fonts.css";
 import Communitybutton from "../components/Communitybutton";
 import post_button from "../assets/icons/post_button.png";
 import Communitypost from "../components/Communitypost";
-import axios from "axios";
+import { CommunityContext } from "../contexts/Community_context";
 
 const Community_container = styled.div`
   width: 20rem;
@@ -56,7 +56,7 @@ const Community_bottom_container = styled.div`
 const Community_post_button = styled.img`
   width: 3.25rem;
   height: 3.25rem;
-  cursor: pointer; 
+  cursor: pointer;
 `;
 
 const Community_post_button_wrapper = styled.div`
@@ -67,11 +67,20 @@ const Community_post_button_wrapper = styled.div`
   justify-content: flex-end;
 `;
 
+const StyledLink = styled(Link)`
+  text-decoration: none;
+  color: black;
+
+  &:visited {
+    color: black;
+  }
+`;
+
 const Community_buttons = ["같이해요", "궁금해요", "정보공유", "일상공유"];
 
 const Community = () => {
+  const { posts } = useContext(CommunityContext);
   const [Community_active_button, Community_set_active_button] = useState("같이해요");
-  const [Community_posts, Community_set_posts] = useState([]);
   const [Community_filter_posts, Community_set_filter_posts] = useState([]);
   const navigate = useNavigate();
 
@@ -81,27 +90,13 @@ const Community = () => {
   };
 
   const Community_filter_posts_tag = (tag) => {
-    const filteredPosts = Community_posts.filter(post => post.tag.name === tag);
+    const filteredPosts = posts.filter(post => post.tag.name === tag);
     Community_set_filter_posts(filteredPosts);
   };
 
   useEffect(() => {
-    const Community_fetch_data = async () => {
-      try {
-        const response = await axios.get(`http://3.39.150.64/community/posts/posts`);
-        Community_set_posts(response.data);
-        Community_filter_posts_tag(Community_active_button);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-
-    Community_fetch_data();
-  }, [Community_active_button]);
-
-  const Community_handle_post_click = (post) => {
-    navigate(`/communityread?id=${post.id}`, { state: { postId: post.id } });
-  };
+    Community_filter_posts_tag(Community_active_button);
+  }, [Community_active_button, posts]);
 
   return (
     <>
@@ -122,15 +117,15 @@ const Community = () => {
         </Community_top_container>
         <Community_bottom_container>
           {Community_filter_posts.map(post => (
-            <Communitypost 
-              key={post.id}
-              id={post.id}
-              title={post.title}
-              content={post.content}
-              tag={post.tag.name}
-              user_id={post.user.user_id}
-              onClick={() => Community_handle_post_click(post)}
-            />
+            <StyledLink key={post.id} to={`/communityread?id=${post.id}`}>
+              <Communitypost 
+                id={post.id}
+                title={post.title}
+                content={post.content}
+                tag={post.tag.name}
+                user_id={post.user.user_id}
+              />
+            </StyledLink>
           ))}
         </Community_bottom_container>
         <Community_post_button_wrapper>
@@ -143,6 +138,7 @@ const Community = () => {
 };
 
 export default Community;
+
 
 
 
