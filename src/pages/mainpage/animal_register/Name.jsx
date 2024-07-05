@@ -1,13 +1,14 @@
-import React from "react";
+import React, { useContext,useState,useEffect } from "react";
 import styled from "styled-components";
 import Layout from "../../Layout";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import Back_arrow from "../../../components/Back_arrow";
-import Next_button from "../../../components/Next_button";
+import Next_button from "../../../components/Next_button_check";
 import Text1 from "../../../components/Text1";
 import Text2 from "../../../components/Text2";
 import Text3 from "../../../components/Text3";
+import { UserContext } from "../../../contexts/User_context";
 
 const Input_box = styled.input`
 position: absolute;
@@ -32,13 +33,26 @@ top: 21.563rem;
 
 const Name = () => {
 
+    const {pet_data, set_pet_data} = useContext(UserContext);
+    const [name,set_name] = useState("");
+
+    const handle_submit = async () => {
+      const pet_name = `${name}`
+      set_pet_data({ ...pet_data, pet_name })};
+
+    const [is_next_disabled, set_is_next_disabled] = useState(true);
+    useEffect(() => {
+      set_is_next_disabled(!(name));
+    }, [name]);
+    
+
     return (
         <>
             <Back_arrow></Back_arrow>
             <Text1 text="반려동물의 이름을 알려주세요."/>
             <Text2 text="이름"/>
-            <Input_box type="text" placeholder="이름을 입력해 주세요."></Input_box>
-            <Next_button></Next_button>
+            <Input_box type="text" placeholder="이름을 입력해 주세요." value={name} onChange={(e) => set_name(e.target.value)}></Input_box>
+            <Next_button onClick={handle_submit} disabled={is_next_disabled}></Next_button>
         </>
     );
 };

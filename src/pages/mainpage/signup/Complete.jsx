@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useContext,useState,useEffect } from "react";
 import styled from "styled-components";
 import Layout from "../../Layout";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import {ReactComponent as Check_img} from "../../../assets/svg_files/complete_check.svg";
 import Next_button from "../../../components/Next_button";
+import { UserContext } from "../../../contexts/User_context";
 
 const Check_img_wrapper = styled.div`
     position: absolute;
@@ -46,14 +47,14 @@ const Text2 = styled.p`
 `
 
 const Complete = () => {
-
+    const {user_data} = useContext(UserContext);
     return (
         <>
             <Check_img_wrapper>
                 <Check_img/>
             </Check_img_wrapper>
             <Text1>회원 가입 완료!</Text1>
-            <Text2>이제 소연 님의 반려동물 정보를 입력 받을게요</Text2>
+            <Text2>이제 {user_data.name} 님의 반려동물 정보를 입력 받을게요</Text2>
             <Next_button/>
         </>
     );
