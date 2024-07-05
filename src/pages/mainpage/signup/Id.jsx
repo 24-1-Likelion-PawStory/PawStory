@@ -60,15 +60,16 @@ const Id = () => {
   const [response, set_response] = useState(false);
   const [is_next_disabled, set_is_next_disabled] = useState(true);
 
-  const handle_submit = async () => {
+  const handle_submit =  async() => {
     const user_id = `${id}`;
     set_user_data({ ...user_data, user_id });
+    await console.log(`변수: ${user_data.user_id}`);
   };
 
   const handle_duplicate_check = async () => {
     const user_id = `${id}`;
     try {
-      const res = await axios.post('https://pawstory.p-e.kr/users/check_user_id', { user_id });
+      const res = await axios.post('https://pawstory.p-e.kr//users/check_user_id', { user_id });
       set_response(res.data.available);
       if (res.data.available) {
         set_is_next_disabled(false);

@@ -112,14 +112,15 @@ color: #000000;
 
 const Select = () => {
     const { pet_data, set_pet_data } = useContext(UserContext);
-    const [selected_type,set_selected_type] = useState(false);
+    const [selected_type,set_selected_type] = useState("");
 
     const handle_type = (type) => {
         set_selected_type(type);
     };   
     const handle_submit = async () => {
         const pet_type = `${selected_type}`
-        set_pet_data({ ...pet_data, pet_type })};
+        set_pet_data({ ...pet_data, pet_type });
+        await console.log(`type: ${pet_data.pet_type}`)};
         
     const [is_next_disabled, set_is_next_disabled] = useState(true);
     useEffect(() => {

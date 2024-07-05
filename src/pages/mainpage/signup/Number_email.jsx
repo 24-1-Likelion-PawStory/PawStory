@@ -114,6 +114,7 @@ const Number_email = () => {
     const phone = `${number_1}-${number_2}-${number_3}`;
     const email = `${email_1}@${email_2}`;
     set_user_data({ ...user_data, phone, email });
+    console.log(`변수: ${user_data.phone} ${user_data.email}`);
   };
 
   return (

@@ -54,9 +54,9 @@ const Loginhome = () => {
 
   useEffect(() => {
     axios
-      .get(`https://reqres.in/api/users?page=1&per_page=9`)
+      .get(`https://~~/diaries/diary`)
       .then((res) => {
-        set_home_post(res.data.data); // 데이터를 상태에 저장
+        set_home_post(res.data); // 데이터를 상태에 저장
       })
       .catch((e) => {
         console.log(e);
