@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
-import { useLocation } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
-import { styled } from "styled-components";
+import { useLocation, useNavigate } from "react-router-dom";
+import styled from "styled-components";
+import axios from "axios";
 import "../components/Fonts.css";
 import Communitypost_response from "../components/Communitypost_response";
 import Communityread_like_black from '../assets/icons/like_black.png';
@@ -281,38 +281,79 @@ const Communityread_write_comment_post = styled.button`
 const Communityread = () => {
   const { posts, addComment, toggleLike, updatePost, deletePost } = useContext(CommunityContext);
   const [community_read_comment, set_community_read_comment] = useState("");
+  const [community_read_post, set_community_read_post] = useState({});
+  const [comments, setComments] = useState([]);
   const location = useLocation();
   const postId = new URLSearchParams(location.search).get("id");
   const navigate = useNavigate();
 
-  const community_read_post = posts.find(post => post.id === Number(postId)) || {};
-
   const [isEditing, setIsEditing] = useState(false);
-  const [editedTitle, setEditedTitle] = useState(community_read_post.title);
-  const [editedContent, setEditedContent] = useState(community_read_post.content);
+  const [editedTitle, setEditedTitle] = useState("");
+  const [editedContent, setEditedContent] = useState("");
 
-  const handle_comment = () => {
+  useEffect(() => {
+    const fetchPostDetails = async () => {
+      try {
+        const response = await axios.get(`/community/posts/${postId}`);
+        set_community_read_post(response.data);
+        setEditedTitle(response.data.title);
+        setEditedContent(response.data.content);
+      } catch (error) {
+        console.error("Error fetching post details:", error);
+      }
+    };
+
+    const fetchComments = async () => {
+      try {
+        const response = await axios.get(`/posts/${postId}/comments`);
+        setComments(response.data);
+      } catch (error) {
+        console.error("Error fetching comments:", error);
+      }
+    };
+
+    fetchPostDetails();
+    fetchComments();
+  }, [postId]);
+
+  const handle_comment = async () => {
     const newComment = {
-      id: new Date().getTime(), // Assuming each comment gets a unique ID
       content: community_read_comment,
       user: { user_id: "test1" }
     };
-    addComment(Number(postId), newComment);
-    set_community_read_comment("");
+
+    try {
+      const response = await axios.post(`/posts/${postId}/comments`, newComment);
+      setComments([...comments, response.data]);
+      set_community_read_comment("");
+    } catch (error) {
+      console.error("Error adding comment:", error);
+    }
   };
 
   const handle_like = () => {
     toggleLike(Number(postId));
   };
 
-  const handleSave = () => {
-    updatePost(Number(postId), editedTitle, editedContent);
-    setIsEditing(false);
+  const handleSave = async () => {
+    try {
+      const updatedPost = { title: editedTitle, content: editedContent };
+      const response = await axios.put(`/community/posts/${postId}`, updatedPost);
+      set_community_read_post(response.data);
+      setIsEditing(false);
+    } catch (error) {
+      console.error("Error updating post:", error);
+    }
   };
 
-  const handleDelete = () => {
-    deletePost(Number(postId));
-    navigate('/community'); // 커뮤니티 메인 페이지로 이동
+  const handleDelete = async () => {
+    try {
+      await axios.delete(`/community/posts/${postId}`);
+      deletePost(Number(postId));
+      navigate('/community'); // 커뮤니티 메인 페이지로 이동
+    } catch (error) {
+      console.error("Error deleting post:", error);
+    }
   };
 
   return (
@@ -363,12 +404,12 @@ const Communityread = () => {
           </Communityread_post_response>
         </Communityread_post>
         <Communityread_comment_wrapper>
-          {community_read_post.comments && community_read_post.comments.map((comment) => (
+          {comments.map((comment) => (
             <Communityread_comment_container key={comment.id}>
               <Communityread_comment_profile_wrapper>
                 <Communityread_comment_profile_wrapper2>
-                <Communityread_comment_profile />
-                <Communityread_comment_name>익명</Communityread_comment_name>
+                  <Communityread_comment_profile />
+                  <Communityread_comment_name>익명</Communityread_comment_name>
                 </Communityread_comment_profile_wrapper2>
                 <Communityread_dropdown2 postId={Number(postId)} commentId={comment.id} />
               </Communityread_comment_profile_wrapper>

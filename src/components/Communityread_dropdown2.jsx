@@ -1,8 +1,8 @@
 import React, { useState, useContext } from 'react';
-import { styled } from 'styled-components';
-import "../components/Fonts.css";
+import styled from 'styled-components';
 import Communityread_dropdown_ellipsis from '../assets/icons/ellipsis.png';
 import { CommunityContext } from '../contexts/Community_context';
+import axios from 'axios';
 
 const Communityread_dropdown2_container = styled.div`
   width: 4rem;
@@ -55,10 +55,14 @@ const Communityread_dropdown2 = ({ postId, commentId }) => {
     set_dropdown_show(!dropdown_show);
   };
 
-  const handle_delete = () => {
-    console.log(`Deleting comment with postId: ${postId} and commentId: ${commentId}`);
-    deleteComment(postId, commentId);
-    set_dropdown_show(false);
+  const handle_delete = async () => {
+    try {
+      await axios.delete(`/community/posts/${postId}/comments/${commentId}`);
+      deleteComment(postId, commentId);
+      set_dropdown_show(false);
+    } catch (error) {
+      console.error('Error deleting comment:', error);
+    }
   };
 
   return (
@@ -74,6 +78,5 @@ const Communityread_dropdown2 = ({ postId, commentId }) => {
 };
 
 export default Communityread_dropdown2;
-
 
 

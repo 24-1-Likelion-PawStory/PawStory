@@ -1,11 +1,12 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import axios from "axios";
 import "../components/Fonts.css";
 import Underbar from "../components/Underbar";
 import Communitybutton from "../components/Communitybutton";
 import post_button from "../assets/icons/post_button.png";
-import Communitypost from "../components/Communitypost"; // 수정된 Communitypost를 import
+import Communitypost from "../components/Communitypost";
 import { CommunityContext } from "../contexts/Community_context";
 
 const Community_container = styled.div`
@@ -79,7 +80,7 @@ const StyledLink = styled(Link)`
 const Community_buttons = ["같이해요", "궁금해요", "정보공유", "일상공유"];
 
 const Community = () => {
-  const { posts } = useContext(CommunityContext);
+  const { posts, setPosts } = useContext(CommunityContext); // setPosts를 추가하여 posts를 설정할 수 있도록 함
   const [Community_active_button, Community_set_active_button] = useState("같이해요");
   const [Community_filter_posts, Community_set_filter_posts] = useState([]);
   const navigate = useNavigate();
@@ -93,6 +94,19 @@ const Community = () => {
     const filteredPosts = posts.filter(post => post.tag.name === tag);
     Community_set_filter_posts(filteredPosts);
   };
+
+  useEffect(() => {
+    const fetchPosts = async () => {
+      try {
+        const response = await axios.get("/community/posts");
+        setPosts(response.data);
+      } catch (error) {
+        console.error("Error fetching posts:", error);
+      }
+    };
+
+    fetchPosts();
+  }, []);
 
   useEffect(() => {
     Community_filter_posts_tag(Community_active_button);
@@ -138,7 +152,6 @@ const Community = () => {
 };
 
 export default Community;
-
 
 
 

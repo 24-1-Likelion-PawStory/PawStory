@@ -1,10 +1,9 @@
 import React, { useState, useContext } from 'react';
-import { useNavigate } from 'react-router-dom';  // React Router의 useNavigate 훅을 가져옵니다.
-import { styled } from 'styled-components';
-import "../components/Fonts.css";
+import { useNavigate } from 'react-router-dom';
+import styled from 'styled-components';
 import Communityread_dropdown_ellipsis from '../assets/icons/ellipsis.png';
 import { CommunityContext } from '../contexts/Community_context';
-
+import axios from 'axios';
 const Communityread_dropdown_container = styled.div`
   width: 4rem;
   height: 1.5rem;
@@ -51,7 +50,7 @@ const Communityread_dropdown_item = styled.div`
 const Communityread_dropdown = ({ setIsEditing, postId }) => {
   const [dropdown_show, set_dropdown_show] = useState(false);
   const { deletePost } = useContext(CommunityContext);
-  const navigate = useNavigate();  // useNavigate 훅을 사용하여 navigate 함수를 가져옵니다.
+  const navigate = useNavigate();
 
   const toggle_dropdown = () => {
     set_dropdown_show(!dropdown_show);
@@ -62,10 +61,15 @@ const Communityread_dropdown = ({ setIsEditing, postId }) => {
     set_dropdown_show(false);
   };
 
-  const handle_delete = () => {
-    deletePost(postId);
-    set_dropdown_show(false);
-    navigate('/community');  // 삭제 후 /community 페이지로 이동합니다.
+  const handle_delete = async () => {
+    try {
+      await axios.delete(`/community/posts/${postId}`);
+      deletePost(postId);
+      set_dropdown_show(false);
+      navigate('/community');
+    } catch (error) {
+      console.error('Error deleting post:', error);
+    }
   };
 
   return (

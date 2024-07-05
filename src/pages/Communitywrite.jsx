@@ -1,5 +1,6 @@
 import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import Back from "../components/Back";
 import { styled } from "styled-components";
 import "../components/Fonts.css";
@@ -126,11 +127,10 @@ const Communitywrite = () => {
     communitywrite_set_content(e.target.value);
   };
 
-  const communitywrite_handle_share_click = () => {
+  const communitywrite_handle_share_click = async () => {
     setClicked(prevState => !prevState); // 클릭 상태 토글
 
     const newPost = {
-      id: Date.now(), // 임시 ID 생성
       title: communitywrite_title,
       content: communitywrite_content,
       tag: {
@@ -144,11 +144,16 @@ const Communitywrite = () => {
       }
     };
 
-    addPost(newPost);
-    communitywrite_set_title(""); // 제목 입력란 비우기
-    communitywrite_set_content(""); // 본문 입력란 비우기
-    communitywrite_set_active_button(""); // 태그 초기화
-    navigate('/community'); // Community 페이지로 이동
+    try {
+      const response = await axios.post("/community/posts/create", newPost);
+      addPost(response.data); // 서버로부터 반환된 데이터를 추가
+      communitywrite_set_title(""); // 제목 입력란 비우기
+      communitywrite_set_content(""); // 본문 입력란 비우기
+      communitywrite_set_active_button(""); // 태그 초기화
+      navigate('/community'); // Community 페이지로 이동
+    } catch (error) {
+      console.error("Error creating post:", error);
+    }
   };
 
   const community_buttons = ["같이해요", "궁금해요", "정보공유", "일상공유"];
@@ -194,4 +199,3 @@ const Communitywrite = () => {
 };
 
 export default Communitywrite;
-
