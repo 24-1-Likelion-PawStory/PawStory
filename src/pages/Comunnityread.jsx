@@ -7,6 +7,7 @@ import Communitypost_response from "../components/Communitypost_response";
 import Communityread_like_black from '../assets/icons/like_black.png';
 import Communityread_like_pink from '../assets/icons/like_pink.png';
 import Back from "../components/Back";
+import Communityread_dropdown from "../components/Communityread_dropdown";
 
 const Communityread_container = styled.div`
   width: 23.438rem;
@@ -39,10 +40,22 @@ const Communityread_writer_profile = styled.div`
   border-radius: 1rem;
 `;
 
-const Communityread_writer_text = styled.div`
-  border: 1px solid black;
+const Communityread_writer_text2 = styled.div`
+  //border: 1px solid black;
   height: 1.5rem;
   width: 17.25rem;
+  padding-left:0.5rem;
+  display:flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.75rem;
+  font-family: 'OpenSans';
+  font-weight: 400;
+`;
+
+const Communityread_writer_text = styled.div`
+  //border: 1px solid black;
+  height: 1.5rem;
   padding-left:0.5rem;
   display:flex;
   align-items: center;
@@ -109,8 +122,8 @@ const Communityread_post_response = styled.div`
 `;
 
 const Communityread_response_icon = styled.img`
-  width: 1rem;
-  height: 1rem;
+  width: 1.5rem;
+  height: 1.5rem;
   margin-right: 0.25rem;
   cursor: pointer;
 `;
@@ -281,10 +294,13 @@ const Communityread = () => {
       <div>
         <Communityread_writer>
           <Communityread_writer_profile />
+          <Communityread_writer_text2>
           <Communityread_writer_text>
             <Communityread_writer_name>{community_read_post.user?.user_id || '익명'}</Communityread_writer_name>
             <Communityread_writer_date>{new Date(community_read_post.created_at).toLocaleDateString() || '날짜'}</Communityread_writer_date>
           </Communityread_writer_text>
+          <Communityread_dropdown/>
+          </Communityread_writer_text2>
         </Communityread_writer>
         <Communityread_post>
           <Communityread_post_post>
@@ -311,6 +327,7 @@ const Communityread = () => {
               <Communityread_comment_text>
                 {comment.content}
               </Communityread_comment_text>
+              <Communityread_dropdown/>
             </Communityread_comment_container>
           ))}
         </Communityread_comment_wrapper>
