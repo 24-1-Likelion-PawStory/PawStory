@@ -111,9 +111,9 @@ const Number_email = () => {
   }, [number_1, number_2, number_3, email_1, email_2]);
 
   const handle_submit = () => {
-    const phone_number = `${number_1}-${number_2}-${number_3}`;
+    const phone = `${number_1}-${number_2}-${number_3}`;
     const email = `${email_1}@${email_2}`;
-    set_user_data({ ...user_data, phone_number, email });
+    set_user_data({ ...user_data, phone, email });
   };
 
   return (
