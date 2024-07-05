@@ -1,7 +1,8 @@
 /* eslint-disable react/jsx-pascal-case */
-import React, { useState } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import styled from 'styled-components';
 import { useLocation } from 'react-router-dom';
+import axios from 'axios';
 import "../components/Fonts.css"
 import Back_button from "../components/Back";
 import Profile from "../components/Profile";
@@ -9,6 +10,7 @@ import Follow from "../components/Follow"
 import Info from "../components/Post_info";
 import Hr from "../components/Horizon"
 import Comment, { Profile_container, Userimg, Username, Comment_txt } from "../components/Comment"
+import { DiaryContext } from "../contexts/Diary_context.js";
 
 const Diary_container = styled.div`
   display: flex;
@@ -72,32 +74,75 @@ const FixedCommentInput = styled.div`
 `;
 
 const Home_diary = () => {
+  const { diaries, addDiary, addComment, toggleLike } = useContext(DiaryContext);
   const location = useLocation();
-  const { imageUrl, caption } = location.state?.postData || {
-    imageUrl: '',
-    caption: '',
+  const [diaryData, setDiaryData] = useState(null);
+  const [comments, setComments] = useState([]);
+  const [likeCount, setLikeCount] = useState(0);
+  const [isLiked, setIsLiked] = useState(false);
+
+  useEffect(() => {
+    const fetchDiaryData = async () => {
+      try {
+        const diaryId = location.state?.postData?.id || localStorage.getItem('diaryId');
+        const response = await axios.get(`https://pawstory.p-e.kr/diaries/diary/${diaryId}/`);
+        setDiaryData(response.data);
+        setComments(response.data.comments || []);
+        setLikeCount(response.data.like_count);
+        setIsLiked(response.data.is_liked); // 백엔드에서 현재 사용자가 좋아요를 눌렀는지 여부를 제공한다고 가정
+        addDiary(response.data);
+      } catch (error) {
+        console.error("Error fetching diary data:", error);
+      }
+    };
+
+    fetchDiaryData();
+  }, [location.state, addDiary]);
+
+  const handleAddComment = async (newComment) => {
+    try {
+      const diaryId = diaryData.id;
+      const response = await axios.post(`https://pawstory.p-e.kr/diaries/diary/${diaryId}/comments`, {
+        content: newComment
+      });
+      setComments([...comments, response.data]);
+      addComment(diaryId, response.data);
+    } catch (error) {
+      console.error("Error adding comment:", error);
+    }
   };
 
-  const [comments, setComments] = useState([]);
-
-  const handleAddComment = (newComment) => {
-    setComments(prevComments => [...prevComments, newComment]);
+  const handleLike = async () => {
+    try {
+      const diaryId = diaryData.id;
+      const response = await axios.put(`https://pawstory.p-e.kr/diaries/diary/${diaryId}/like`);
+      setLikeCount(response.data.like_count);
+      setIsLiked(!isLiked);
+      toggleLike(diaryId);
+    } catch (error) {
+      console.error("Error toggling like:", error);
+    }
   };
 
   return (
     <Diary_container>
       <Back_button/>
-      <Post_img src={imageUrl} alt="Post" />
+      <Post_img src={diaryData.photo} alt="Post" />
       <Div>
         <Profile/>
         <Follow/>
       </Div>
       <Div>
         <Post_text>
-          {caption}
+          {diaryData.content}
         </Post_text>
       </Div>
-      <Info/>
+      <Info
+        likeCount={likeCount} 
+        commentCount={comments.length} 
+        isLiked={isLiked} 
+        onLike={handleLike}
+      />
       <Hr/>
       <CommentSection>
         <CommentList>
@@ -105,10 +150,10 @@ const Home_diary = () => {
             <CommentItem key={index}>
               <Profile_container>
                 <Userimg/>
-                <Username>{comment.username || 'Anonymous'}</Username>
+                <Username>{comment.member.user_id || 'Anonymous'}</Username>
               </Profile_container>
               <Comment_txt>
-                {comment.commentBody}
+                {comment.content}
               </Comment_txt>
               <Hr/>
             </CommentItem>

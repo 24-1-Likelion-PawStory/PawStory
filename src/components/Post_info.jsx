@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-pascal-case */
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import "./Fonts.css";
 import Comment from "../assets/icons/comment_button.png"
@@ -43,30 +43,23 @@ const Like_btn = styled.img`
   margin-left: 5.188rem;
 `
 
-const Post_info = () => {
-  const [is_like, set_is_like] = useState(false);
-  const [like_count, set_like_count] = useState(0);
-  const handle_like = () => {
-    set_is_like(!is_like);
-    set_like_count(is_like ? like_count - 1 : like_count + 1);
-  }
-
+const Post_info = ({ likeCount, commentCount, isLiked, onLike }) => {
   return (
     <Info_container>
       <Div>
         <Icon_container>
           <Icon src={Like} alt="likes" />
-          <Count>{like_count}개</Count>
+          <Count>{likeCount}개</Count>
         </Icon_container>
         <Icon_container>
           <Icon src={Comment} alt="comments" />
-          <Count>200개</Count>
+          <Count>{commentCount}개</Count>
         </Icon_container>
       </Div>
       <Like_btn
-        src={is_like ? Like : Unlike}
-        alt={is_like ? "unlike" : "like"}
-        onClick={handle_like}
+        src={isLiked ? Like : Unlike}
+        alt={isLiked ? "unlike" : "like"}
+        onClick={onLike}
       />
     </Info_container>
   );
