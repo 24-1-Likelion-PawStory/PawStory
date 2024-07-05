@@ -8,7 +8,7 @@ import Communityread_like_black from '../assets/icons/like_black.png';
 import Communityread_like_pink from '../assets/icons/like_pink.png';
 import Back from "../components/Back";
 
-const CommunityreadContainer = styled.div`
+const Communityread_container = styled.div`
   width: 23.438rem;
   height: 50.75rem;
   display: flex;
@@ -16,7 +16,7 @@ const CommunityreadContainer = styled.div`
   align-items: center;
 `;
 
-const CommunityreadContent = styled.div`
+const Communityread_content = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -24,7 +24,7 @@ const CommunityreadContent = styled.div`
   justify-content: center;
 `;
 
-const CommunityreadWriter = styled.div`
+const Communityread_writer = styled.div`
   height: 3.688rem;
   width: 18.75rem;
   display: flex;
@@ -32,37 +32,39 @@ const CommunityreadWriter = styled.div`
   margin: 0;
 `;
 
-const CommunityreadWriterProfile = styled.div`
+const Communityread_writer_profile = styled.div`
   width: 1.5rem;
   height: 1.5rem;
   background-color: #d9d9d9;
   border-radius: 1rem;
 `;
 
-const CommunityreadWriterText = styled.div`
+const Communityread_writer_text = styled.div`
+  border: 1px solid black;
   height: 1.5rem;
   width: 17.25rem;
-  display: flex;
-  justify-content: space-between;
+  padding-left:0.5rem;
+  display:flex;
   align-items: center;
   font-size: 0.75rem;
   font-family: 'OpenSans';
   font-weight: 400;
 `;
 
-const CommunityreadWriterName = styled.div`
+const Communityread_writer_name = styled.div`
   display: flex;
   align-items: center;
   height: 100%;
 `;
 
-const CommunityreadWriterDate = styled.div`
+const Communityread_writer_date = styled.div`
+  padding-left:0.5rem;
   display: flex;
   align-items: center;
   height: 100%;
 `;
 
-const CommunityreadPost = styled.div`
+const Communityread_post = styled.div`
   height: 11rem;
   width: 18.75rem;
   display: flex;
@@ -71,13 +73,13 @@ const CommunityreadPost = styled.div`
   margin: 0;
 `;
 
-const CommunityreadPostPost = styled.div`
+const Communityread_post_post = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
 `;
 
-const CommunityreadPostTitle = styled.div`
+const Communityread_post_title = styled.div`
   height: 2.063rem;
   width: 18.75rem;
   display: flex;
@@ -87,7 +89,7 @@ const CommunityreadPostTitle = styled.div`
   font-weight: 600;
 `;
 
-const CommunityreadPostContent = styled.div`
+const Communityread_post_content = styled.div`
   height: 2.063rem;
   width: 18.75rem;
   display: flex;
@@ -97,7 +99,7 @@ const CommunityreadPostContent = styled.div`
   font-weight: 400;
 `;
 
-const CommunityreadPostResponse = styled.div`
+const Communityread_post_response = styled.div`
   border-bottom: 0.019rem solid #d9d9d9;
   height: 2.063rem;
   width: 18.75rem;
@@ -106,14 +108,14 @@ const CommunityreadPostResponse = styled.div`
   align-items: center;
 `;
 
-const CommunityreadResponseIcon = styled.img`
+const Communityread_response_icon = styled.img`
   width: 1rem;
   height: 1rem;
   margin-right: 0.25rem;
   cursor: pointer;
 `;
 
-const CommunityreadCommentWrapper = styled.div`
+const Communityread_comment_wrapper = styled.div`
   width: 18.75rem;
   height: 24.6rem;
   display: flex;
@@ -128,19 +130,19 @@ const CommunityreadCommentWrapper = styled.div`
   }
 `;
 
-const CommunityreadCommentContainer = styled.div`
+const Communityread_comment_container = styled.div`
   border-bottom: 0.019rem solid #d9d9d9;
   width: 18.75rem;
   height: 4.125rem;
   min-height: 4.125rem;
 `;
 
-const CommunityreadCommentProfileWrapper = styled.div`
+const Communityread_comment_profile_wrapper = styled.div`
   padding-top: 0.7rem;
   display: flex;
 `;
 
-const CommunityreadCommentProfile = styled.div`
+const Communityread_comment_profile = styled.div`
   width: 1rem;
   height: 1rem;
   margin-right: 0.5rem;
@@ -148,7 +150,7 @@ const CommunityreadCommentProfile = styled.div`
   border-radius: 1rem;
 `;
 
-const CommunityreadCommentName = styled.div`
+const Communityread_comment_name = styled.div`
   display: flex;
   align-items: center;
   height: 100%;
@@ -157,7 +159,7 @@ const CommunityreadCommentName = styled.div`
   font-weight: 400;
 `;
 
-const CommunityreadCommentText = styled.div`
+const Communityread_comment_text = styled.div`
   height: 1.5rem;
   width: 17.25rem;
   display: flex;
@@ -168,14 +170,14 @@ const CommunityreadCommentText = styled.div`
   font-weight: 400;
 `;
 
-const CommunityreadWriteComment = styled.div`
+const Communityread_write_comment = styled.div`
   display: flex;
   width: 100%;
   justify-content: center;
   align-items: center;
 `;
 
-const CommunityreadWriteCommentComment = styled.input`
+const Communityread_write_comment_comment = styled.input`
   border: 0.063rem solid #d9d9d9;
   height: 1.5rem;
   width: 14.188rem;
@@ -195,7 +197,7 @@ const CommunityreadWriteCommentComment = styled.input`
   }
 `;
 
-const CommunityreadWriteCommentPost = styled.button`
+const Communityread_write_comment_post = styled.button`
   border: 0.063rem solid #ffaa2f;
   background-color: #ffaa2f;
   height: 1.813rem;
@@ -274,58 +276,58 @@ const Communityread = () => {
   };
 
   return (
-    <CommunityreadContainer>
+    <Communityread_container>
       <Back />
       <div>
-        <CommunityreadWriter>
-          <CommunityreadWriterProfile />
-          <CommunityreadWriterText>
-            <CommunityreadWriterName>{community_read_post.user?.user_id || '익명'}</CommunityreadWriterName>
-            <CommunityreadWriterDate>{new Date(community_read_post.created_at).toLocaleDateString() || '날짜'}</CommunityreadWriterDate>
-          </CommunityreadWriterText>
-        </CommunityreadWriter>
-        <CommunityreadPost>
-          <CommunityreadPostPost>
-            <CommunityreadPostTitle>{community_read_post.title || '제목'}</CommunityreadPostTitle>
-            <CommunityreadPostContent>{community_read_post.content || '내용'}</CommunityreadPostContent>
-          </CommunityreadPostPost>
+        <Communityread_writer>
+          <Communityread_writer_profile />
+          <Communityread_writer_text>
+            <Communityread_writer_name>{community_read_post.user?.user_id || '익명'}</Communityread_writer_name>
+            <Communityread_writer_date>{new Date(community_read_post.created_at).toLocaleDateString() || '날짜'}</Communityread_writer_date>
+          </Communityread_writer_text>
+        </Communityread_writer>
+        <Communityread_post>
+          <Communityread_post_post>
+            <Communityread_post_title>{community_read_post.title || '제목'}</Communityread_post_title>
+            <Communityread_post_content>{community_read_post.content || '내용'}</Communityread_post_content>
+          </Communityread_post_post>
           
-          <CommunityreadPostResponse>
+          <Communityread_post_response>
             <Communitypost_response />
-            <CommunityreadResponseIcon 
+            <Communityread_response_icon 
               src={community_read_liked ? Communityread_like_pink : Communityread_like_black} 
               alt="like" 
               onClick={handle_like} 
             />
-          </CommunityreadPostResponse>
-        </CommunityreadPost>
-        <CommunityreadCommentWrapper>
+          </Communityread_post_response>
+        </Communityread_post>
+        <Communityread_comment_wrapper>
           {community_read_post.comments && community_read_post.comments.map((comment, index) => (
-            <CommunityreadCommentContainer key={index}>
-              <CommunityreadCommentProfileWrapper>
-                <CommunityreadCommentProfile />
-                <CommunityreadCommentName>{comment.user?.user_id || '익명'}</CommunityreadCommentName>
-              </CommunityreadCommentProfileWrapper>
-              <CommunityreadCommentText>
+            <Communityread_comment_container key={index}>
+              <Communityread_comment_profile_wrapper>
+                <Communityread_comment_profile />
+                <Communityread_comment_name>{comment.user?.user_id || '익명'}</Communityread_comment_name>
+              </Communityread_comment_profile_wrapper>
+              <Communityread_comment_text>
                 {comment.content}
-              </CommunityreadCommentText>
-            </CommunityreadCommentContainer>
+              </Communityread_comment_text>
+            </Communityread_comment_container>
           ))}
-        </CommunityreadCommentWrapper>
+        </Communityread_comment_wrapper>
       </div>
-      <CommunityreadContent>
-        <CommunityreadWriteComment>
-          <CommunityreadWriteCommentComment 
+      <Communityread_content>
+        <Communityread_write_comment>
+          <Communityread_write_comment_comment 
             placeholder="댓글을 입력해 주세요."
             value={community_read_comment}
             onChange={(e) => set_community_read_comment(e.target.value)}
           />
-          <CommunityreadWriteCommentPost onClick={handle_comment}>
+          <Communityread_write_comment_post onClick={handle_comment}>
             등록
-          </CommunityreadWriteCommentPost>
-        </CommunityreadWriteComment>
-      </CommunityreadContent>
-    </CommunityreadContainer>
+          </Communityread_write_comment_post>
+        </Communityread_write_comment>
+      </Communityread_content>
+    </Communityread_container>
   );
 };
 

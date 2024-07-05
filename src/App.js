@@ -1,3 +1,4 @@
+import { UserProvider } from "./contexts/User_context.js";
 /* eslint-disable react/jsx-pascal-case */
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
@@ -27,32 +28,34 @@ import Signup_password from "./pages/mainpage/signup/Password";
 
 function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-      <Route element={<Layout />}>
-        <Route path= "/" element={<Joinhome/>}/>
-        <Route path= "/loginpage" element={<Loginpage/>}/>
+    <UserProvider>
+      <BrowserRouter>
+        <Routes>
+        <Route element={<Layout />}>
+          <Route path= "/" element={<Joinhome/>}/>
+          <Route path= "/loginpage" element={<Loginpage/>}/>
 
-        <Route path= "/signup_name_birth" element={<Signup_name_birth/>}/>
-        <Route path= "/signup_name_birth/number" element={<Signup_number/>}/>
-        <Route path= "/signup_name_birth/number/id" element={<Signup_id/>}/>
-        <Route path= "/signup_name_birth/number/id/password" element={<Signup_password/>}/>
-        <Route path= "/signup_name_birth/number/id/password/complete" element={<Signup_complete/>}/>
+          <Route path= "/signup_name_birth" element={<Signup_name_birth/>}/>
+          <Route path= "/signup_name_birth/number" element={<Signup_number/>}/>
+          <Route path= "/signup_name_birth/number/id" element={<Signup_id/>}/>
+          <Route path= "/signup_name_birth/number/id/password" element={<Signup_password/>}/>
+          <Route path= "/signup_name_birth/number/id/password/complete" element={<Signup_complete/>}/>
 
-        <Route path= "/register_select" element={<Animal_select/>}/>
-        <Route path= "/register_select/name" element={<Animal_name/>}/>
-        <Route path= "/register_select/name/image" element={<Animal_image/>}/>
-        <Route path= "/register_select/name/image/complete" element={<Animal_complete/>}/>
-        <Route path= "/home" element={<Loginhome/>}/>
-        <Route path= "/home/post" element={<Home_write/>}/>
-        <Route path= "/diary" element={<Home_diary/>}/>
-        <Route path= "/my" element={<Myhome/>}/>
-        <Route path= "/community" element={<Community/>}/>
-        <Route path= "/communityread" element={<Communityread/>}/>
-        <Route path= "/communitywrite" element={<Communitywrite/>}/>
-        </Route>
-      </Routes>
-    </BrowserRouter>
+          <Route path= "/register_select" element={<Animal_select/>}/>
+          <Route path= "/register_select/name" element={<Animal_name/>}/>
+          <Route path= "/register_select/name/image" element={<Animal_image/>}/>
+          <Route path= "/register_select/name/image/complete" element={<Animal_complete/>}/>
+          <Route path= "/home" element={<Loginhome/>}/>
+          <Route path= "/home/post" element={<Home_write/>}/>
+          <Route path= "/diary" element={<Home_diary/>}/>
+          <Route path= "/my" element={<Myhome/>}/>
+          <Route path= "/community" element={<Community/>}/>
+          <Route path= "/communityread" element={<Communityread/>}/>
+          <Route path= "/communitywrite" element={<Communitywrite/>}/>
+          </Route>
+        </Routes>
+      </BrowserRouter>
+    </UserProvider>
   );
 }
 

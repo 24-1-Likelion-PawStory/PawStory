@@ -1,14 +1,15 @@
-import React from "react";
+import React, { useContext,useState,useEffect } from "react";
 import styled from "styled-components";
 import Layout from "../../Layout";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import Back_arrow from "../../../components/Back_arrow";
-import Next_button from "../../../components/Next_button";
+import Next_button from "../../../components/Next_button_check";
 import Text1 from "../../../components/Text1";
 import Text2 from "../../../components/Text2";
 import Text3 from "../../../components/Text3";
 import {ReactComponent as Duplicate_img} from "../../../assets/svg_files/signup/duplicate_img.svg";
+import { UserContext } from "../../../contexts/User_context";
 
 const Id_wrapper = styled.div`
 position: absolute;
@@ -47,6 +48,23 @@ background:none;
 `
 
 const Id = () => {
+  const { user_data, set_user_data } = useContext(UserContext);
+  const [id, set_id] = useState("");
+
+  const handle_submit = async () => {
+    const user_id = `${id}`
+    set_user_data({ ...user_data, user_id })};
+
+  const handle_duplicate_check = () => {
+    //중복확인 로직
+  }
+  
+  const [is_next_disabled, set_is_next_disabled] = useState(true);
+  useEffect(() => {
+    set_is_next_disabled(!(id));
+  }, [id]);
+
+
 
     return (
         <>
@@ -54,12 +72,12 @@ const Id = () => {
             <Text1 text="사용하실 아이디를 입력해 주세요."/>
             <Text2 text="아이디"/>
             <Id_wrapper>
-                <Id_box type="text" placeholder="사용하실 아이디를 입력해 주세요."></Id_box>
+                <Id_box type="text" placeholder="사용하실 아이디를 입력해 주세요." value={id} onChange={(e)=> set_id(e.target.value)}></Id_box>
                 <Duplicate_button>
                     <Duplicate_img/>
                 </Duplicate_button>
             </Id_wrapper>
-            <Next_button></Next_button>
+            <Next_button onClick={handle_submit} disabled={is_next_disabled}></Next_button>
         </>
     );
 };

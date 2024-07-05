@@ -1,14 +1,15 @@
-import React from "react";
+import React, { useContext,useState,useEffect } from "react";
 import styled from "styled-components";
 import Layout from "../../Layout";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import Back_arrow from "../../../components/Back_arrow";
-import Next_button from "../../../components/Next_button";
+import Next_button from "../../../components/Next_button_check";
 import Text1 from "../../../components/Text1";
 import {ReactComponent as Primary_img} from "../../../assets/svg_files/register/Primary_img.svg";
 import {ReactComponent as Select_button_img} from "../../../assets/svg_files/register/Select_button.svg";
-import { useState } from "react";
+import { UserContext } from "../../../contexts/User_context";
+import axios from "axios";
 
 const Input_wrapper = styled.button`
 position: absolute;
@@ -53,6 +54,7 @@ img {
 `
 
 const Image = () => {
+    const navigate = useNavigate();
     const [selected_image,set_selected_image] = useState(null);
 
     const handle_file_change = (event) => {
@@ -65,6 +67,26 @@ const Image = () => {
     const handle_button_click =() => {
         document.getElementById("image_input").click();
     }
+
+
+    const {pet_data, set_pet_data} = useContext(UserContext);
+
+    const handle_submit = async () => {
+      const pet_photo = `${selected_image}`
+      const updated_pet_data = { ...pet_data, pet_photo };
+
+      try {
+        await axios.post('/api/user', updated_pet_data);
+        navigate('/register_select/name/image/complete'); // POST 후 다음 페이지로 이동
+      } catch (error) {
+        console.error('데이터 전송 중 오류가 발생했습니다:', error);
+      }
+    };
+
+    const [is_next_disabled, set_is_next_disabled] = useState(true);
+    useEffect(() => {
+      set_is_next_disabled(!(selected_image));
+    }, [selected_image]);
 
     return (
         <>
@@ -85,7 +107,7 @@ const Image = () => {
                 <img src={selected_image}/>
             </Image_preview>
 
-            <Next_button></Next_button>
+            <Next_button onClick={handle_submit} disabled={is_next_disabled}></Next_button>
         </>
     );
 };
