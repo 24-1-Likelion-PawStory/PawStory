@@ -1,13 +1,13 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import axios from "axios";
 import "../components/Fonts.css";
 import Underbar from "../components/Underbar";
 import Communitybutton from "../components/Communitybutton";
 import post_button from "../assets/icons/post_button.png";
 import Communitypost from "../components/Communitypost";
 import { CommunityContext } from "../contexts/Community_context";
+import axiosInstance from "../axios"; // axiosInstance를 가져옴
 
 const Community_container = styled.div`
   width: 20rem;
@@ -92,7 +92,7 @@ const Community = () => {
 
   const Community_filter_posts_tag = async (tag) => {
     try {
-      const response = await axios.get(`/community/posts/tag/${tag.toLowerCase()}`);
+      const response = await axiosInstance.get(`community/posts/tag/${tag.toLowerCase()}`);
       Community_set_filter_posts(response.data);
     } catch (error) {
       console.error("Error fetching posts by tag:", error);
@@ -102,7 +102,7 @@ const Community = () => {
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const response = await axios.get("/community/posts");
+        const response = await axiosInstance.get("community/posts");
         setPosts(response.data);
       } catch (error) {
         console.error("Error fetching posts:", error);

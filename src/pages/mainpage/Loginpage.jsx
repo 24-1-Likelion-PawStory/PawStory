@@ -58,12 +58,18 @@ const Loginpage = () => {
     const user_id = `${id}`;
     const password = `${pw}`;
     set_login_data({ ...login_data, user_id });
-    const updated_login_data = { ...login_data, password };
+    const updated_login_data = { ...login_data, 'user_id':user_id, 'password':password };
+    
 
     try {
-      await axios.post('https://pawstory.p-e.kr/users/login', updated_login_data);
-      navigate('/my'); // POST 후 다음 페이지로 이동
-    } catch (error) {
+      const res = await axios.post('https://pawstory.p-e.kr/users/login', updated_login_data);
+      console.log(updated_login_data)
+      console.log(res)
+      localStorage.setItem('access_token',res.data.access_token)
+      if(res.status === 200) {window.location.href='http://localhost:3000/home'} // POST 후 다음 페이지로 이동
+    }
+
+    catch (error) {
       if (error.response && error.response.status === 401) {
         set_error_message("아이디 또는 비밀번호를 확인해 주세요.");
       } else {

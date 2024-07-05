@@ -81,7 +81,7 @@ const Myhome = () => {
     const userId = localStorage.getItem('userId'); // 로컬 스토리지에서 사용자 ID 가져오기
 
     axios
-      .get(`http://3.39.150.64/accounts/${userId}`)
+      .get(`https://pawstory.p-e.kr/accounts/${userId}`)
       .then((res) => {
         myhome_set_user_info1(res.data); // 데이터를 상태에 저장
       })
@@ -92,7 +92,7 @@ const Myhome = () => {
 
   useEffect(() => {
     axios
-      .get(`http://3.39.150.64/diaries/diary`)
+      .get(`https://pawstory.p-e.kr/diaries/diary`)
       .then((res) => {
         myhome_set_user_info2(res.data); // 데이터를 상태에 저장
       })

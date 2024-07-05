@@ -294,7 +294,7 @@ const Communityread = () => {
   useEffect(() => {
     const fetchPostDetails = async () => {
       try {
-        const response = await axios.get(`/community/posts/${postId}`);
+        const response = await axios.get(`https://pawstory.p-e.kr/community/posts/${postId}`);
         set_community_read_post(response.data);
         setEditedTitle(response.data.title);
         setEditedContent(response.data.content);
@@ -305,7 +305,7 @@ const Communityread = () => {
 
     const fetchComments = async () => {
       try {
-        const response = await axios.get(`/posts/${postId}/comments`);
+        const response = await axios.get(`https://pawstory.p-e.kr/posts/${postId}/comments`);
         setComments(response.data);
       } catch (error) {
         console.error("Error fetching comments:", error);
@@ -323,7 +323,7 @@ const Communityread = () => {
     };
 
     try {
-      const response = await axios.post(`/posts/${postId}/comments`, newComment);
+      const response = await axios.post(`https://pawstory.p-e.kr/posts/${postId}/comments`, newComment);
       setComments([...comments, response.data]);
       set_community_read_comment("");
     } catch (error) {
@@ -338,7 +338,7 @@ const Communityread = () => {
   const handleSave = async () => {
     try {
       const updatedPost = { title: editedTitle, content: editedContent };
-      const response = await axios.put(`/community/posts/${postId}`, updatedPost);
+      const response = await axios.put(`https://pawstory.p-e.kr/community/posts/${postId}`, updatedPost);
       set_community_read_post(response.data);
       setIsEditing(false);
     } catch (error) {
@@ -348,7 +348,7 @@ const Communityread = () => {
 
   const handleDelete = async () => {
     try {
-      await axios.delete(`/community/posts/${postId}`);
+      await axios.delete(`https://pawstory.p-e.kr/community/posts/${postId}`);
       deletePost(Number(postId));
       navigate('/community'); // 커뮤니티 메인 페이지로 이동
     } catch (error) {
