@@ -58,7 +58,7 @@ export default function Communitypost({id, title, content, tag, user_id}){
 
   return(
     <>
-    <Community_bottom_post onClick={() => navigate(`/communityread`)}> 
+    <Community_bottom_post> 
       <Community_bottom_post_title>{title}</Community_bottom_post_title>
       <Community_bottom_post_content>{content}</Community_bottom_post_content>
       <Community_bottom_post_response>

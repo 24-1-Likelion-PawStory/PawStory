@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { styled } from 'styled-components';
 import "../components/Fonts.css";
 import Communityread_dropdown_ellipsis from '../assets/icons/ellipsis.png';
@@ -46,7 +46,7 @@ const Communityread_dropdown_item = styled.div`
   }
 `;
 
-const Communityread_dropdown = () => {
+const Communityread_dropdown = ({ setIsEditing }) => {
   const [dropdown_show, set_dropdown_show] = useState(false);
 
   const toggle_dropdown = () => {
@@ -54,15 +54,14 @@ const Communityread_dropdown = () => {
   };
 
   const handle_edit = () => {
-    console.log('Edit clicked');
+    setIsEditing(true);
     set_dropdown_show(false);
-    // Edit
   };
 
   const handle_delete = () => {
     console.log('Delete clicked');
     set_dropdown_show(false);
-    // Delete
+    // 삭제 로직 추가 가능
   };
 
   return (
